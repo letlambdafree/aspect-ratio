@@ -31,10 +31,10 @@
 
 ;;; Code:
 
-(defvar exwm-ratio-index 0
+(defvar exwm-aspect-ratio-index 0
   "Index for aspect ratio.")
 
-(defvar exwm-ratio-toggle 0
+(defvar exwm-aspect-ratio-toggle 0
   "Toggle flag for aspect ratio.")
 
 (provide 'exwm-ratio)
