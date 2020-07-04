@@ -92,7 +92,10 @@
     (progn (setq exwm-aspect-ratio-toggle t)
            (exwm-aspect-ratio-w))))
 
-
+;; default key
+(exwm-input-set-key (kbd "C-c 1") 'ryutas/aspect-ratio-t)
+(exwm-input-set-key (kbd "C-c 2") 'ryutas/aspect-ratio-w)
+(exwm-input-set-key (kbd "C-c 3") 'ryutas/aspect-ratio-h)
 
 (provide 'exwm-aspect-ratio)
 ;;; exwm-aspect-ratio.el ends here
