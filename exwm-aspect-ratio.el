@@ -1,4 +1,4 @@
-;;; exwm-aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
+;;; aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 by Taeseong Ryu
 
@@ -31,29 +31,29 @@
 
 ;;; Code:
 
-(defvar exwm-aspect-ratio-index 0
+(defvar aspect-ratio-index 0
   "Index for aspect ratio.")
 
-(defvar exwm-aspect-ratio-toggle 0
+(defvar aspect-ratio-toggle 0
   "Toggle flag for aspect ratio.")
 
-(defvar exwm-aspect-ratio-list '(1.33 1.50 1.78 2.35 2.4 2.67)
+(defvar aspect-ratio-list '(1.33 1.50 1.78 2.35 2.4 2.67)
   "Aspect ratio list.")
 
-(defun exwm-aspect-ratio-w(&optional ar)
+(defun aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
   (interactive)
   (let* ((index (cond
-                 ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
-                  (1+ exwm-aspect-ratio-index))
+                 ((nth (1+ aspect-ratio-index) aspect-ratio-list)
+                  (1+ aspect-ratio-index))
                  (t 0)))
          (aspect-ratio (cond (ar ar)
-                             (t (nth index exwm-aspect-ratio-list))))
+                             (t (nth index aspect-ratio-list))))
          (height (+ (round (/ (window-pixel-width) aspect-ratio))
                     (window-mode-line-height)
                     1)))
     (if (not ar)
-        (setq exwm-aspect-ratio-index index))
+        (setq aspect-ratio-index index))
     (window-resize nil (- height (window-pixel-height)) nil nil t)
     (message "aspect ratio(%s): %s"
              (propertize
@@ -61,20 +61,20 @@
              (propertize
               (number-to-string aspect-ratio) 'face '(:foreground "red")))))
 
-(defun exwm-aspect-ratio-h(&optional ar)
+(defun aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
   (interactive)
   (let* ((index (cond
-                 ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
-                  (1+ exwm-aspect-ratio-index))
+                 ((nth (1+ aspect-ratio-index) aspect-ratio-list)
+                  (1+ aspect-ratio-index))
                  (t 0)))
          (aspect-ratio (cond (ar ar)
-                             (t (nth index exwm-aspect-ratio-list))))
+                             (t (nth index aspect-ratio-list))))
          (width (round (* (- (window-pixel-height)
                              (window-mode-line-height))
                           aspect-ratio))))
     (if (not ar)
-        (setq exwm-aspect-ratio-index index))
+        (setq aspect-ratio-index index))
     (window-resize nil (- width (window-pixel-width)) t nil t)
     (message "aspect ratio(%s): %s"
              (propertize
@@ -82,20 +82,20 @@
              (propertize
               (number-to-string aspect-ratio) 'face '(:foreground "red")))))
 
-(defun exwm-aspect-ratio-t()
-  "Toggle between exwm-aspect-ratio-w and exwm-aspect-ratio-h."
+(defun aspect-ratio-t()
+  "Toggle between aspect-ratio-w and aspect-ratio-h."
   (interactive)
   (balance-windows)
-  (if exwm-aspect-ratio-toggle
-      (progn (setq exwm-aspect-ratio-toggle nil)
-             (exwm-aspect-ratio-h))
-    (progn (setq exwm-aspect-ratio-toggle t)
-           (exwm-aspect-ratio-w))))
+  (if aspect-ratio-toggle
+      (progn (setq aspect-ratio-toggle nil)
+             (aspect-ratio-h))
+    (progn (setq aspect-ratio-toggle t)
+           (aspect-ratio-w))))
 
 ;; default key
-(exwm-input-set-key (kbd "C-c 1") 'exwm-aspect-ratio-t)
-(exwm-input-set-key (kbd "C-c 2") 'exwm-aspect-ratio-w)
-(exwm-input-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
+(globe-set-key (kbd "C-c 1") 'aspect-ratio-t)
+(globe-set-key (kbd "C-c 2") 'aspect-ratio-w)
+(globe-set-key (kbd "C-c 3") 'aspect-ratio-h)
 
-(provide 'exwm-aspect-ratio)
-;;; exwm-aspect-ratio.el ends here
+(provide 'aspect-ratio)
+;;; aspect-ratio.el ends here
