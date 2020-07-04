@@ -61,7 +61,7 @@
              (propertize
               (number-to-string aspect-ratio) 'face '(:foreground "red")))))
 
-(defun ryutas/aspect-ratio-h(&optional ar)
+(defun exwm-aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
   (interactive)
   (let* ((index (cond
@@ -81,6 +81,16 @@
               "H" 'face '(:foreground "green"))
              (propertize
               (number-to-string aspect-ratio) 'face '(:foreground "red")))))
+
+(defun exwm-aspect-ratio-t()
+  "Toggle between exwm-aspect-ratio-w and exwm-aspect-ratio-h."
+  (interactive)
+  (balance-windows)
+  (if exwm-aspect-ratio-toggle
+      (progn (setq exwm-aspect-ratio-toggle nil)
+             (exwm-aspect-ratio-h))
+    (progn (setq exwm-aspect-ratio-toggle t)
+           (exwm-aspect-ratio-w))))
 
 
 
