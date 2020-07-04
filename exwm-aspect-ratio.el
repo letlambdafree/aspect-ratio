@@ -93,9 +93,9 @@
            (exwm-aspect-ratio-w))))
 
 ;; default key
-(exwm-input-set-key (kbd "C-c 1") 'ryutas/aspect-ratio-t)
-(exwm-input-set-key (kbd "C-c 2") 'ryutas/aspect-ratio-w)
-(exwm-input-set-key (kbd "C-c 3") 'ryutas/aspect-ratio-h)
+(exwm-input-set-key (kbd "C-c 1") 'exwm-aspect-ratio-t)
+(exwm-input-set-key (kbd "C-c 2") 'exwm-aspect-ratio-w)
+(exwm-input-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
 
 (provide 'exwm-aspect-ratio)
 ;;; exwm-aspect-ratio.el ends here
