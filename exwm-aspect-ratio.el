@@ -40,7 +40,26 @@
 (defvar exwm-aspect-ratio-list '(1.33 1.50 1.78 2.35 2.4 2.67)
   "aspect ratio list for aspect ratio.")
 
-
+(defun exwm-aspect-ratio-w(&optional ar)
+  "Fixed width with optional AR."
+  (interactive)
+  (let* ((index (cond
+                 ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
+                  (1+ exwm-aspect-ratio-index))
+                 (t 0)))
+         (aspect-ratio (cond (ar ar)
+                             (t (nth index exwm-aspect-ratio-list))))
+         (height (+ (round (/ (window-pixel-width) aspect-ratio))
+                    (window-mode-line-height)
+                    1)))
+    (if (not ar)
+        (setq exwm-aspect-ratio-index index))
+    (window-resize nil (- height (window-pixel-height)) nil nil t)
+    (message "aspect ratio(%s): %s"
+             (propertize
+              "W" 'face '(:foreground "green"))
+             (propertize
+              (number-to-string aspect-ratio) 'face '(:foreground "red")))))
 
 
 
