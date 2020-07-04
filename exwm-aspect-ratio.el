@@ -63,5 +63,28 @@
 
 
 
+(defun ryutas/aspect-ratio-h(&optional ar)
+  "Fixed height with optional AR."
+  (interactive)
+  (let* ((index (cond
+                 ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
+                  (1+ exwm-aspect-ratio-index))
+                 (t 0)))
+         (aspect-ratio (cond (ar ar)
+                             (t (nth index exwm-aspect-ratio-list))))
+         (width (round (* (- (window-pixel-height)
+                             (window-mode-line-height))
+                          aspect-ratio))))
+    (if (not ar)
+        (setq exwm-aspect-ratio-index index))
+    (window-resize nil (- width (window-pixel-width)) t nil t)
+    (message "aspect ratio(%s): %s"
+             (propertize
+              "H" 'face '(:foreground "green"))
+             (propertize
+              (number-to-string aspect-ratio) 'face '(:foreground "red")))))
+
+
+
 (provide 'exwm-aspect-ratio)
 ;;; exwm-aspect-ratio.el ends here
