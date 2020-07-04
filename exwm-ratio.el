@@ -22,14 +22,9 @@
 
 ;;; Commentary:
 
-;; Shows buffers in a window grid with miniaturized previews from which you
-;; can select a buffer to switch to. Inspired by the exposé feature of some
-;; window managers.
-
-;;; Code:
-
 ;; test
 
+;;; Code:
 
 
 
