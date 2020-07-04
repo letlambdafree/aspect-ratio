@@ -37,5 +37,12 @@
 (defvar exwm-aspect-ratio-toggle 0
   "Toggle flag for aspect ratio.")
 
+(defvar exwm-aspect-ratio-list '(1.33 1.50 1.78 2.35 2.4 2.67)
+  "aspect ratio list for aspect ratio.")
+
+
+
+
+
 (provide 'exwm-aspect-ratio)
 ;;; exwm-aspect-ratio.el ends here
