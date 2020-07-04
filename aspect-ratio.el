@@ -93,9 +93,9 @@
            (aspect-ratio-w))))
 
 ;; default key
-(globe-set-key (kbd "C-c 1") 'aspect-ratio-t)
-(globe-set-key (kbd "C-c 2") 'aspect-ratio-w)
-(globe-set-key (kbd "C-c 3") 'aspect-ratio-h)
+(global-set-key (kbd "C-c 1") 'aspect-ratio-t)
+(global-set-key (kbd "C-c 2") 'aspect-ratio-w)
+(global-set-key (kbd "C-c 3") 'aspect-ratio-h)
 
 (provide 'aspect-ratio)
 ;;; aspect-ratio.el ends here
