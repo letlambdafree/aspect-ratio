@@ -1,1 +1,1 @@
-# exwm-ratio
+# aspect-ratio
