@@ -3,7 +3,7 @@
 ;; Copyright (C) 2020 by Taeseong Ryu
 
 ;; Author: Taeseong Ryu <formeu2s@gmail.com>
-;; URL: https://github.com/letlambdafree/exwm-aspect-ratio
+;; URL: https://github.com/letlambdafree/aspect-ratio
 ;; Version: 0.0.1
 ;; Keywords: convenience
 
