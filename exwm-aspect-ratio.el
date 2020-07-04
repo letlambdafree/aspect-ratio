@@ -1,4 +1,4 @@
-;;; exwm-ratio.el --- resize a window in exwm   -*- lexical-binding: t; -*-
+;;; exwm-aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 by Taeseong Ryu
 
@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; resize window by aspect ratio
+;; resize a window by aspect ratio
 ;; 1.78 - 16:9 1920 x 1080, 1280 x 720, 858 x 480, 640 x 360, 426 x 240
 ;; 1.33 - 4:3 800 x 600
 ;; 1.50 - 3:2 720 x 480
