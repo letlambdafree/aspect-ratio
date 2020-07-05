@@ -56,6 +56,10 @@
   2
   "Number for splitting aspect-ratios to two area.")
 
+(defconst aspect-ratio-player
+  "mpv-with-sub"
+  "player for playing a movie file.")
+
 (defconst aspect-ratio-list
   '(1.33 ; 4:3 800 x 600
     1.50 ; 3:2 720 x 480
@@ -193,7 +197,7 @@ Ffprobe is a part of the ffmpeg package."
   (if (> aspect-ratio-ar aspect-ratio-border)
       (aspect-ratio-h aspect-ratio-ar)
     (aspect-ratio-w aspect-ratio-ar))
-  (start-process "aspect-ratio-mpv" nil "mpv-with-sub" file))
+  (start-process "aspect-ratio-mpv" nil aspect-ratio-player file))
 
 (defun aspect-ratio-open-in-dired()
   "Open with original aspect-ratio from FILE in dired."
@@ -203,7 +207,7 @@ Ffprobe is a part of the ffmpeg package."
     (if (> aspect-ratio-ar aspect-ratio-border)
         (aspect-ratio-h aspect-ratio-ar)
       (aspect-ratio-w aspect-ratio-ar))
-    (start-process "aspect-ratio-mpv" nil "mpv-with-sub" file)))
+    (start-process "aspect-ratio-mpv" nil aspect-ratio-player file)))
 
 ;; default key
 ;; use C-x z (repeat) after a command
@@ -211,7 +215,7 @@ Ffprobe is a part of the ffmpeg package."
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
 (global-set-key (kbd "C-c 2") 'aspect-ratio-w)
 (global-set-key (kbd "C-c 3") 'aspect-ratio-h)
-(global-set-key (kbd "C-<return>") 'aspect-ratio-open-in-dired)
+(define-key dired-mode-map (kbd "C-<return>") 'aspect-ratio-open-in-dired)
 
 (provide 'aspect-ratio)
 ;;; aspect-ratio.el ends here
