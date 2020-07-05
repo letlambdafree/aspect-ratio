@@ -51,10 +51,9 @@
 (defun aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
   (interactive)
-  (let* ((index (cond
-                 ((nth (1+ aspect-ratio-index) aspect-ratio-list)
-                  (1+ aspect-ratio-index))
-                 (t 0)))
+  (let* ((index (cond ((nth (1+ aspect-ratio-index) aspect-ratio-list)
+                       (1+ aspect-ratio-index))
+                      (t 0)))
          (aspect-ratio (cond (ar ar)
                              (t (nth index aspect-ratio-list))))
          (height (+ (round (/ (window-pixel-width) aspect-ratio))
@@ -72,10 +71,9 @@
 (defun aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
   (interactive)
-  (let* ((index (cond
-                 ((nth (1+ aspect-ratio-index) aspect-ratio-list)
-                  (1+ aspect-ratio-index))
-                 (t 0)))
+  (let* ((index (cond ((nth (1+ aspect-ratio-index) aspect-ratio-list)
+                       (1+ aspect-ratio-index))
+                      (t 0)))
          (aspect-ratio (cond (ar ar)
                              (t (nth index aspect-ratio-list))))
          (width (round (* (- (window-pixel-height)
@@ -105,7 +103,7 @@
   (interactive)
   (when (member (file-name-extension file) aspect-ratio-video-list)
     (let*
-        ((file (replace-regexp-in-string "[][() ]" "\\\\\\&" file))
+        ((outfile (replace-regexp-in-string "[][() ]" "\\\\\\&" file))
          (output (shell-command-to-string
                   (format
                    "ffprobe -v error \
@@ -113,7 +111,7 @@
                        -show_entries stream=display_aspect_ratio,width,height \
                        -of csv=s=x:p=0 \
                        %s"
-                   file)))
+                   outfile)))
          (split-output (split-string (substring output 0 -1) "[x:]"))
          ;; ffprobe results
          ;; N/A
@@ -125,10 +123,9 @@
                 ((eq (length split-output) 3) (delete "N/A" split-output))
                 ((eq (length split-output) 4) (nthcdr 2 split-output))))
          (string-ar (/ (string-to-number (nth 0 cond-output))
-                       (float (string-to-number
-                               (if (nth 1 cond-output)
-                                   (nth 1 cond-output)
-                                 1)))))
+                       (float (string-to-number (if (nth 1 cond-output)
+                                                    (nth 1 cond-output)
+                                                  1)))))
          ;; 1.77777777777777 -> 1.78
          (number-ar (string-to-number (format "%0.2f" string-ar))))
       (setq aspect-ratio-ar number-ar))))
