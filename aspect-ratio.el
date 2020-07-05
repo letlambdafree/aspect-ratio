@@ -141,7 +141,7 @@
       (setq aspect-ratio-toggle t)
       (aspect-ratio-w))))
 
-(defun get-aspect-ratio(file)
+(defun aspect-ratio-get(file)
   "Get original aspect ratio from FILE using ffprobe.
 Ffprobe is a part of the ffmpeg package."
   (interactive)
@@ -180,7 +180,16 @@ Ffprobe is a part of the ffmpeg package."
       (message "aspect ratio: %s"
                (propertize ar
                            'face `(:foreground ,aspect-ratio-ar-color)))
-      (setq aspect-ratio-ar ar))))
+      (setq aspect-ratio-ar (string-to-number ar)))))
+
+(defun aspect-ratio-open(file)
+  "Open with original aspect ratio from FILE."
+  (interactive)
+  (aspect-ratio-get file)
+  (if (> aspect-ratio-ar 2)
+      (aspect-ratio-h aspect-ratio-ar)
+    (aspect-ratio-w aspect-ratio-ar))
+  (start-process "aspect-ratio-mpv" nil "mpv-with-sub" file))
 
 ;; default key
 ;; use C-x z (repeat) after a command
