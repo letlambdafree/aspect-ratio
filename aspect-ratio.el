@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+(require 'dired)
+
 (defvar aspect-ratio-index
   nil
   "Index for aspect-ratio.")
@@ -58,7 +60,12 @@
 
 (defconst aspect-ratio-player
   "mpv-with-sub"
-  "player for playing a movie file.")
+  "Player for playing a movie file.")
+
+(defconst aspect-ratio-player-processname
+  "aspect-ratio-mpv"
+  "Player-processname for playing a movie file.")
+
 
 (defconst aspect-ratio-list
   '(1.33 ; 4:3 800 x 600
@@ -197,19 +204,22 @@ Ffprobe is a part of the ffmpeg package."
   (if (> aspect-ratio-ar aspect-ratio-border)
       (aspect-ratio-h aspect-ratio-ar)
     (aspect-ratio-w aspect-ratio-ar))
-  (start-process "aspect-ratio-mpv" nil aspect-ratio-player file))
+  (start-process
+   aspect-ratio-player-processname nil aspect-ratio-player file))
 
 (defun aspect-ratio-open-in-dired()
-  "Open with original aspect-ratio from FILE in dired."
+  "Open with original aspect-ratio from file in dired."
   (interactive)
   (let ((file (dired-get-filename nil t)))
     (aspect-ratio-get file)
     (if (> aspect-ratio-ar aspect-ratio-border)
         (aspect-ratio-h aspect-ratio-ar)
       (aspect-ratio-w aspect-ratio-ar))
-    (start-process "aspect-ratio-mpv" nil aspect-ratio-player file)))
+    (start-process
+     aspect-ratio-player-processname nil aspect-ratio-player file)))
 
 ;; default key
+;; just example, you can customize them.
 ;; use C-x z (repeat) after a command
 ;; use exwm-set-key for exwm
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
