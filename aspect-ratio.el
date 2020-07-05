@@ -31,20 +31,25 @@
 
 ;;; Code:
 
-(defvar aspect-ratio-index 0
+(defvar aspect-ratio-index
+  0
   "Index for aspect ratio.")
 
-(defvar aspect-ratio-toggle 0
+(defvar aspect-ratio-toggle
+  0
   "Toggle flag for aspect ratio.")
 
-(defvar aspect-ratio-ar 0
+(defvar aspect-ratio-ar
+  0
   "Aspect ratio for file.")
 
-(defvar aspect-ratio-list '(1.33 1.50 1.78 2.35 2.4 2.67)
+(defvar aspect-ratio-list
+  '(1.33 1.50 1.78 2.35 2.40 2.67)
   "Aspect ratio list.")
 
-(defvar aspect-ratio-video-list '("mkv" "avi" "mp4" "mpeg" "mpg" "wmv" "flv"
-                                  "webm" "ogg" "asf" "mov")
+(defvar aspect-ratio-video-list
+  '("mkv" "avi" "mp4" "mpeg" "mpg" "wmv" "flv"
+    "webm" "ogg" "asf" "mov")
   "Aspect ratio video list.")
 
 
