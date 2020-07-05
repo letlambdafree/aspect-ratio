@@ -133,6 +133,8 @@
                                                   1)))))
          ;; 1.77777777777777 -> 1.78
          (number-ar (string-to-number (format "%0.2f" string-ar))))
+      (message "aspect ratio: %s"
+               (propertize number-ar 'face '(:foreground "red")))
       (setq aspect-ratio-ar number-ar))))
 
 ;; default key
