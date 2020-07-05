@@ -103,7 +103,7 @@
     (progn (setq aspect-ratio-toggle t)
            (aspect-ratio-w))))
 
-(defun get-aspect-ratio (file)
+(defun get-aspect-ratio(file)
   "Get aspect ratio from FILE using ffprobe."
   (interactive)
   (when (member (file-name-extension file) aspect-ratio-video-list)
