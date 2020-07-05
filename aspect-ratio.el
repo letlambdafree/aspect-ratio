@@ -195,12 +195,23 @@ Ffprobe is a part of the ffmpeg package."
     (aspect-ratio-w aspect-ratio-ar))
   (start-process "aspect-ratio-mpv" nil "mpv-with-sub" file))
 
+(defun aspect-ratio-open-in-dired()
+  "Open with original aspect-ratio from FILE in dired."
+  (interactive)
+  (let ((file (dired-get-filename nil t)))
+    (aspect-ratio-get file)
+    (if (> aspect-ratio-ar aspect-ratio-border)
+        (aspect-ratio-h aspect-ratio-ar)
+      (aspect-ratio-w aspect-ratio-ar))
+    (start-process "aspect-ratio-mpv" nil "mpv-with-sub" file)))
+
 ;; default key
 ;; use C-x z (repeat) after a command
 ;; use exwm-set-key for exwm
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
 (global-set-key (kbd "C-c 2") 'aspect-ratio-w)
 (global-set-key (kbd "C-c 3") 'aspect-ratio-h)
+(global-set-key (kbd "C-<return>") 'aspect-ratio-open-in-dired)
 
 (provide 'aspect-ratio)
 ;;; aspect-ratio.el ends here
