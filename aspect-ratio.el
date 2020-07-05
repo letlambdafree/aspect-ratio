@@ -43,11 +43,11 @@
   0
   "Aspect ratio for file.")
 
-(defvar aspect-ratio-list
+(defconst aspect-ratio-list
   '(1.33 1.50 1.78 2.35 2.40 2.67)
   "Aspect ratio list.")
 
-(defvar aspect-ratio-video-list
+(defconst aspect-ratio-video-list
   '("mkv" "avi" "mp4" "mpeg" "mpg" "wmv" "flv"
     "webm" "ogg" "asf" "mov")
   "Aspect ratio video list.")
@@ -104,7 +104,8 @@
            (aspect-ratio-w))))
 
 (defun get-aspect-ratio(file)
-  "Get aspect ratio from FILE using ffprobe."
+  "Get original aspect ratio from FILE using ffprobe.
+Ffprobe is part of the ffmpeg package."
   (interactive)
   (when (member (file-name-extension file) aspect-ratio-video-list)
     (let*
