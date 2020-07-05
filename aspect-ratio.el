@@ -24,25 +24,25 @@
 
 ;; This package is useful playing a video file in exwm(tiling window manager).
 ;;
-;; It can resize a window with the file's original aspect ratio.
+;; It can resize a window with the file's original aspect-ratio.
 
 ;;; Code:
 
 (defvar aspect-ratio-index
   nil
-  "Index for aspect ratio.")
+  "Index for aspect-ratio.")
 
 (defvar aspect-ratio-toggle
   nil
-  "Toggle flag for aspect ratio.")
+  "Toggle flag for aspect-ratio.")
 
 (defvar aspect-ratio-ar
   nil
-  "Aspect ratio for file.")
+  "Aspect-ratio for file.")
 
 (defconst aspect-ratio-ar-color
   "red"
-  "Aspect ratio color for message.")
+  "Aspect-ratio color for message.")
 
 (defconst aspect-ratio-W-color
   "green"
@@ -51,6 +51,10 @@
 (defconst aspect-ratio-H-color
   "green"
   "H color for message.")
+
+(defconst aspect-ratio-border
+  2
+  "Number for splitting aspect-ratios to two area.")
 
 (defconst aspect-ratio-list
   '(1.33 ; 4:3 800 x 600
@@ -142,7 +146,7 @@
       (aspect-ratio-w))))
 
 (defun aspect-ratio-get(file)
-  "Get original aspect ratio from FILE using ffprobe.
+  "Get original aspect-ratio from FILE using ffprobe.
 Ffprobe is a part of the ffmpeg package."
   (interactive)
   (when (member (file-name-extension file) aspect-ratio-video-list)
@@ -183,10 +187,10 @@ Ffprobe is a part of the ffmpeg package."
       (setq aspect-ratio-ar (string-to-number ar)))))
 
 (defun aspect-ratio-open(file)
-  "Open with original aspect ratio from FILE."
+  "Open with original aspect-ratio from FILE."
   (interactive)
   (aspect-ratio-get file)
-  (if (> aspect-ratio-ar 2)
+  (if (> aspect-ratio-ar aspect-ratio-border)
       (aspect-ratio-h aspect-ratio-ar)
     (aspect-ratio-w aspect-ratio-ar))
   (start-process "aspect-ratio-mpv" nil "mpv-with-sub" file))
