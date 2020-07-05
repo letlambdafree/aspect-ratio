@@ -22,6 +22,8 @@
 
 ;;; Commentary:
 
+;; This package is useful playing movie on dired in exwm.
+;;
 ;; resize a window by aspect ratio
 ;; 1.78 - 16:9 1920 x 1080, 1280 x 720, 858 x 480, 640 x 360, 426 x 240
 ;; 1.33 - 4:3 800 x 600
@@ -51,7 +53,6 @@
   '("mkv" "avi" "mp4" "mpeg" "mpg" "wmv" "flv"
     "webm" "ogg" "asf" "mov")
   "Aspect ratio video list.")
-
 
 (defun aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
@@ -105,7 +106,7 @@
 
 (defun get-aspect-ratio(file)
   "Get original aspect ratio from FILE using ffprobe.
-Ffprobe is part of the ffmpeg package."
+Ffprobe is a part of the ffmpeg package."
   (interactive)
   (when (member (file-name-extension file) aspect-ratio-video-list)
     (let*
@@ -139,6 +140,7 @@ Ffprobe is part of the ffmpeg package."
       (setq aspect-ratio-ar ar))))
 
 ;; default key
+;; use C-x z (repeat) ... after a command
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
 (global-set-key (kbd "C-c 2") 'aspect-ratio-w)
 (global-set-key (kbd "C-c 3") 'aspect-ratio-h)
