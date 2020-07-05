@@ -37,8 +37,16 @@
 (defvar aspect-ratio-toggle 0
   "Toggle flag for aspect ratio.")
 
+(defvar aspect-ratio-ar 0
+  "Aspect ratio for file.")
+
 (defvar aspect-ratio-list '(1.33 1.50 1.78 2.35 2.4 2.67)
   "Aspect ratio list.")
+
+(defvar aspect-ratio-video-list '("mkv" "avi" "mp4" "mpeg" "mpg" "wmv" "flv"
+                                  "webm" "ogg" "asf" "mov")
+  "Aspect ratio video list.")
+
 
 (defun aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
@@ -91,6 +99,39 @@
              (aspect-ratio-h))
     (progn (setq aspect-ratio-toggle t)
            (aspect-ratio-w))))
+
+(defun get-aspect-ratio (file)
+  "Get aspect ratio from FILE using ffprobe."
+  (interactive)
+  (when (member (file-name-extension file) aspect-ratio-video-list)
+    (let*
+        ((file (replace-regexp-in-string "[][() ]" "\\\\\\&" file))
+         (output (shell-command-to-string
+                  (format
+                   "ffprobe -v error \
+                       -select_streams v:0 \
+                       -show_entries stream=display_aspect_ratio,width,height \
+                       -of csv=s=x:p=0 \
+                       %s"
+                   file)))
+         (split-output (split-string (substring output 0 -1) "[x:]"))
+         ;; ffprobe results
+         ;; N/A
+         ;; 1920x1080
+         ;; 1920x1080xN/A
+         ;; 720x480x853:480
+         (cond-output
+          (cond ((eq (length split-output) 2) split-output)
+                ((eq (length split-output) 3) (delete "N/A" split-output))
+                ((eq (length split-output) 4) (nthcdr 2 split-output))))
+         (string-ar (/ (string-to-number (nth 0 cond-output))
+                       (float (string-to-number
+                               (if (nth 1 cond-output)
+                                   (nth 1 cond-output)
+                                 1)))))
+         ;; 1.77777777777777 -> 1.78
+         (number-ar (string-to-number (format "%0.2f" string-ar))))
+      (setq aspect-ratio-ar number-ar))))
 
 ;; default key
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
