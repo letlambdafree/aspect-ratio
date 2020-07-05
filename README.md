@@ -1,5 +1,5 @@
 # aspect-ratio
 
-This package is useful playing movie file in exwm.
+This package is useful playing a video file in exwm(tiling window manager).
 
-Resize a window by original aspect ratio.
+It can resize a window with the file's original aspect ratio.
