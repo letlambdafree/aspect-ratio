@@ -24,7 +24,7 @@
 
 ;; This package is useful playing movie in exwm.
 ;;
-;; resize a window by original aspect ratio
+;; Resize a window by original aspect ratio.
 
 ;;; Code:
 
