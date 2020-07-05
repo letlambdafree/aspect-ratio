@@ -54,14 +54,13 @@
   '("mkv" ; Matroska Video Container
     "avi" ; Audio Video Interleave
     "mp4" ; MPEG-4 Part 14
-    "mpeg"
-    "mpg" ; MPEG-1 Video File
+    "mpg" ; MPEG-1 or MPEG-2 Video File
+    "mpeg" ; MPEG-1 or MPEG-2 Video File
     "wmv" ; Windows Media Video
+    "webm" ; media file format designed for the web
     "flv" ; Flash Video
     "ts" ; MPEG transport stream
-    "webm"
-    "ogg"
-    "asf"
+    "asf" ; Advanced Systems Format
     "mov" ; QuickTime File Format
     "rmvb" ; RealMedia Variable Bitrate
     )
