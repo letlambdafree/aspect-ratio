@@ -132,10 +132,10 @@
                                                     (nth 1 cond-output)
                                                   1)))))
          ;; 1.77777777777777 -> 1.78
-         (number-ar (string-to-number (format "%0.2f" string-ar))))
+         (ar (format "%0.2f" string-ar)))
       (message "aspect ratio: %s"
-               (propertize number-ar 'face '(:foreground "red")))
-      (setq aspect-ratio-ar number-ar))))
+               (propertize ar 'face '(:foreground "red")))
+      (setq aspect-ratio-ar ar))))
 
 ;; default key
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
