@@ -40,6 +40,10 @@
   0
   "Aspect ratio for file.")
 
+(defconst aspect-ratio-color
+  "red"
+  "Aspect ratio color for message.")
+
 (defconst aspect-ratio-list
   '(1.33 ; 4:3 800 x 600
     1.50 ; 3:2 720 x 480
@@ -84,7 +88,8 @@
              (propertize
               "W" 'face '(:foreground "green"))
              (propertize
-              (number-to-string aspect-ratio) 'face '(:foreground "red")))))
+              (number-to-string aspect-ratio)
+              'face '(:foreground aspect-ratio-color)))))
 
 (defun aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
@@ -104,7 +109,8 @@
              (propertize
               "H" 'face '(:foreground "green"))
              (propertize
-              (number-to-string aspect-ratio) 'face '(:foreground "red")))))
+              (number-to-string aspect-ratio)
+              'face '(:foreground aspect-ratio-color)))))
 
 (defun aspect-ratio-t()
   "Toggle between aspect-ratio-w and aspect-ratio-h."
@@ -148,7 +154,7 @@ Ffprobe is a part of the ffmpeg package."
          ;; 1.77777777777777 -> 1.78
          (ar (format "%0.2f" string-ar)))
       (message "aspect ratio: %s"
-               (propertize ar 'face '(:foreground "red")))
+               (propertize ar 'face '(:foreground aspect-ratio-color)))
       (setq aspect-ratio-ar ar))))
 
 ;; default key
