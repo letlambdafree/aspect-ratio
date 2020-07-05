@@ -51,17 +51,19 @@
   "Aspect ratio list.")
 
 (defconst aspect-ratio-video-list
-  '("mkv"
-    "avi"
-    "mp4"
+  '("mkv" ; Matroska Video Container
+    "avi" ; Audio Video Interleave
+    "mp4" ; MPEG-4 Part 14
     "mpeg"
-    "mpg"
-    "wmv"
-    "flv"
+    "mpg" ; MPEG-1 Video File
+    "wmv" ; Windows Media Video
+    "flv" ; Flash Video
+    "ts" ; MPEG transport stream
     "webm"
     "ogg"
     "asf"
-    "mov"
+    "mov" ; QuickTime File Format
+    "rmvb" ; RealMedia Variable Bitrate
     )
   "Aspect ratio video list.")
 
