@@ -83,7 +83,9 @@
                     1)))
     (if (not ar)
         (setq aspect-ratio-index index))
-    (window-resize nil (- height (window-pixel-height)) nil nil t)
+    (condition-case nil
+        (window-resize nil (- height (window-pixel-height)) nil nil t)
+      (error nil))
     (message "aspect ratio(%s): %s"
              (propertize
               "W" 'face '(:foreground "green"))
@@ -104,7 +106,9 @@
                           aspect-ratio))))
     (if (not ar)
         (setq aspect-ratio-index index))
-    (window-resize nil (- width (window-pixel-width)) t nil t)
+    (condition-case nil
+        (window-resize nil (- width (window-pixel-width)) t nil t)
+      (error nil))
     (message "aspect ratio(%s): %s"
              (propertize
               "H" 'face '(:foreground "green"))
