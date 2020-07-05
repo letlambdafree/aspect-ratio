@@ -22,22 +22,22 @@
 
 ;;; Commentary:
 
-;; This package is useful playing movie on dired in exwm.
+;; This package is useful playing movie in exwm.
 ;;
-;; resize a window by aspect ratio
+;; resize a window by original aspect ratio
 
 ;;; Code:
 
 (defvar aspect-ratio-index
-  0
+  nil
   "Index for aspect ratio.")
 
 (defvar aspect-ratio-toggle
-  0
+  nil
   "Toggle flag for aspect ratio.")
 
 (defvar aspect-ratio-ar
-  0
+  nil
   "Aspect ratio for file.")
 
 (defconst aspect-ratio-color
