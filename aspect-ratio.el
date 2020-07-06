@@ -54,6 +54,11 @@
   "green"
   "H color for message.")
 
+(defconst aspect-ratio-fixed
+  "border"
+  "Determine which fixed.
+Width, height, border")
+
 (defconst aspect-ratio-border
   2
   "Number for splitting aspect-ratios to two area.")
@@ -189,9 +194,13 @@ Ffprobe is a part of the ffmpeg package."
   (interactive)
   (let ((ar (aspect-ratio-get file)))
     (when ar
-      (if (> ar aspect-ratio-border)
-          (aspect-ratio-h ar)
-        (aspect-ratio-w ar))
+      (if (string= aspect-ratio-fixed 'width)
+          (aspect-ratio-w ar)
+        (if(string= aspect-ratio-fixed 'height)
+            (aspect-ratio-h ar)
+          (if (> ar aspect-ratio-border)
+              (aspect-ratio-h ar)
+            (aspect-ratio-w ar))))
       (start-process
        aspect-ratio-player-processname nil aspect-ratio-player file))))
 
@@ -201,16 +210,20 @@ Ffprobe is a part of the ffmpeg package."
   (let* ((file (dired-get-filename nil t))
          (ar (aspect-ratio-get file)))
     (when ar
-      (if (> ar aspect-ratio-border)
-          (aspect-ratio-h ar)
-        (aspect-ratio-w ar))
+      (if (string= aspect-ratio-fixed 'width)
+          (aspect-ratio-w ar)
+        (if(string= aspect-ratio-fixed 'height)
+            (aspect-ratio-h ar)
+          (if (> ar aspect-ratio-border)
+              (aspect-ratio-h ar)
+            (aspect-ratio-w ar))))
       (start-process
        aspect-ratio-player-processname nil aspect-ratio-player file))))
 
 ;; default key
 ;; just example, you can customize it.
 ;; use C-x z (repeat) after a command
-;; use exwm-set-key for exwm
+;; use exwm-input-set-key for exwm
 (global-set-key (kbd "C-c 1") 'aspect-ratio-t)
 (global-set-key (kbd "C-c 2") 'aspect-ratio-w)
 (global-set-key (kbd "C-c 3") 'aspect-ratio-h)
