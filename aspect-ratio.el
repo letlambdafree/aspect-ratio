@@ -76,7 +76,7 @@
     2.40
     2.67 ; 1920 x 720
     )
-  "Aspect ratio list.")
+  "Aspect-ratio list.")
 
 (defconst aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
@@ -92,7 +92,7 @@
     "mov" ; QuickTime File Format
     "rmvb" ; RealMedia Variable Bitrate
     )
-  "Aspect ratio video list.")
+  "Aspect-ratio video list.")
 
 (defun aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
@@ -108,14 +108,13 @@
                     1)))
     (if (not ar)
         (setq aspect-ratio-index index))
-    (condition-case nil
-        (window-resize nil (- height (window-pixel-height)) nil nil t)
-      (error nil))
+    (ignore-errors
+      (window-resize nil (- height (window-pixel-height)) nil nil t))
     (message "aspect ratio(%s): %s"
-             (propertize "W"
-                         'face `(:foreground ,aspect-ratio-W-color))
-             (propertize (number-to-string aspect-ratio)
-                         'face `(:foreground ,aspect-ratio-ar-color)))))
+             (propertize "W" 'face
+                         `(:foreground ,aspect-ratio-W-color))
+             (propertize (number-to-string aspect-ratio) 'face
+                         `(:foreground ,aspect-ratio-ar-color)))))
 
 (defun aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
@@ -130,14 +129,13 @@
                           aspect-ratio))))
     (if (not ar)
         (setq aspect-ratio-index index))
-    (condition-case nil
-        (window-resize nil (- width (window-pixel-width)) t nil t)
-      (error nil))
+    (ignore-errors
+      (window-resize nil (- width (window-pixel-width)) t nil t))
     (message "aspect ratio(%s): %s"
-             (propertize "H"
-                         'face `(:foreground ,aspect-ratio-H-color))
-             (propertize (number-to-string aspect-ratio)
-                         'face `(:foreground ,aspect-ratio-ar-color)))))
+             (propertize "H" 'face
+                         `(:foreground ,aspect-ratio-H-color))
+             (propertize (number-to-string aspect-ratio) 'face
+                         `(:foreground ,aspect-ratio-ar-color)))))
 
 (defun aspect-ratio-t()
   "Toggle between aspect-ratio-w and aspect-ratio-h."
@@ -182,8 +180,8 @@ Ffprobe is a part of the ffmpeg package."
          ;; 1.77777777777777 -> 1.78
          (ar (format "%0.2f" string-ar)))
       (message "aspect ratio: %s"
-               (propertize ar
-                           'face `(:foreground ,aspect-ratio-ar-color)))
+               (propertize ar 'face
+                           `(:foreground ,aspect-ratio-ar-color)))
       (setq aspect-ratio-ar (string-to-number ar)))))
 
 (defun aspect-ratio-open(file)
@@ -192,8 +190,8 @@ Ffprobe is a part of the ffmpeg package."
   (let ((ar (aspect-ratio-get file)))
     (when ar
       (if (> ar aspect-ratio-border)
-          (aspect-ratio-h aspect-ratio-ar)
-        (aspect-ratio-w aspect-ratio-ar))
+          (aspect-ratio-h ar)
+        (aspect-ratio-w ar))
       (start-process
        aspect-ratio-player-processname nil aspect-ratio-player file))))
 
@@ -204,8 +202,8 @@ Ffprobe is a part of the ffmpeg package."
          (ar (aspect-ratio-get file)))
     (when ar
       (if (> ar aspect-ratio-border)
-          (aspect-ratio-h aspect-ratio-ar)
-        (aspect-ratio-w aspect-ratio-ar))
+          (aspect-ratio-h ar)
+        (aspect-ratio-w ar))
       (start-process
        aspect-ratio-player-processname nil aspect-ratio-player file))))
 
