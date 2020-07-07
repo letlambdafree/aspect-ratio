@@ -1,4 +1,4 @@
-# aspect-ratio
+# exwm-aspect-ratio
 
 This package is useful playing a video file in exwm(tiling window manager).
 
