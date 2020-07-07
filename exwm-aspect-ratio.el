@@ -59,9 +59,9 @@
 (defconst exwm-aspect-ratio-fixed
   "width"
   "Determine which fixed.
-Options are width, height, border")
+Options are width, height, both")
 
-(defconst exwm-aspect-ratio-border
+(defconst exwm-aspect-ratio-both
   2
   "Number for splitting aspect-ratios to two area.")
 
@@ -201,7 +201,7 @@ Ffprobe is a part of the ffmpeg package."
           (exwm-aspect-ratio-w ar)
         (if(string= exwm-aspect-ratio-fixed 'height)
             (exwm-aspect-ratio-h ar)
-          (if (> ar exwm-aspect-ratio-border)
+          (if (> ar exwm-aspect-ratio-both)
               (exwm-aspect-ratio-h ar)
             (exwm-aspect-ratio-w ar))))
       (start-process exwm-aspect-ratio-player-processname
@@ -217,7 +217,7 @@ Ffprobe is a part of the ffmpeg package."
           (exwm-aspect-ratio-w ar)
         (if(string= exwm-aspect-ratio-fixed 'height)
             (exwm-aspect-ratio-h ar)
-          (if (> ar exwm-aspect-ratio-border)
+          (if (> ar exwm-aspect-ratio-both)
               (exwm-aspect-ratio-h ar)
             (exwm-aspect-ratio-w ar))))
       (start-process exwm-aspect-ratio-player-processname
