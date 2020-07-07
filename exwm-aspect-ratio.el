@@ -31,7 +31,7 @@
 (require 'dired)
 
 (defvar aspect-ratio-index
-  nil
+  0
   "Index for aspect-ratio.")
 
 (defvar aspect-ratio-toggle
@@ -55,9 +55,9 @@
   "H color for message.")
 
 (defconst aspect-ratio-fixed
-  "border"
+  "width"
   "Determine which fixed.
-Width, height, border")
+Options are width, height, border")
 
 (defconst aspect-ratio-border
   2
