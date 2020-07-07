@@ -84,6 +84,17 @@ Options are width, height, both")
     )
   "Aspect-ratio list.")
 
+(defconst exwm-aspect-ratio-zoom-list
+  '(0.50
+    0.75
+    1.00
+    1.25
+    1.50
+    1.75
+    2.00
+    )
+  "Aspect-ratio list.")
+
 (defconst exwm-aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
     "avi" ; Audio Video Interleave
