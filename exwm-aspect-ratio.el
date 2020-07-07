@@ -1,9 +1,9 @@
-;;; aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
+;;; exwm-aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 by Taeseong Ryu
 
 ;; Author: Taeseong Ryu <formeu2s@gmail.com>
-;; URL: https://github.com/letlambdafree/aspect-ratio
+;; URL: https://github.com/letlambdafree/exwm-aspect-ratio
 ;; Version: 0.0.1
 ;; Keywords: convenience
 
@@ -30,50 +30,50 @@
 
 (require 'dired)
 
-(defvar aspect-ratio-index
+(defvar exwm-aspect-ratio-index
   0
   "Index for aspect-ratio.")
 
-(defvar aspect-ratio-toggle
+(defvar exwm-aspect-ratio-toggle
   nil
   "Toggle flag for aspect-ratio.")
 
-(defvar aspect-ratio-ar
+(defvar exwm-aspect-ratio-ar
   nil
   "Aspect-ratio for file.")
 
-(defconst aspect-ratio-ar-color
+(defconst exwm-aspect-ratio-ar-color
   "red"
   "Aspect-ratio color for message.")
 
-(defconst aspect-ratio-W-color
+(defconst exwm-aspect-ratio-W-color
   "green"
   "W color for message.")
 
-(defconst aspect-ratio-H-color
+(defconst exwm-aspect-ratio-H-color
   "green"
   "H color for message.")
 
-(defconst aspect-ratio-fixed
+(defconst exwm-aspect-ratio-fixed
   "width"
   "Determine which fixed.
 Options are width, height, border")
 
-(defconst aspect-ratio-border
+(defconst exwm-aspect-ratio-border
   2
   "Number for splitting aspect-ratios to two area.")
 
-(defconst aspect-ratio-player
+(defconst exwm-aspect-ratio-player
   ;; "mpv"
   "mpv-with-sub"
   "Player for playing a movie file.")
 
-(defconst aspect-ratio-player-processname
+(defconst exwm-aspect-ratio-player-processname
   "aspect-ratio-mpv"
   "Player-processname for playing a movie file.")
 
 
-(defconst aspect-ratio-list
+(defconst exwm-aspect-ratio-list
   '(1.33 ; 4:3 800 x 600
     1.50 ; 3:2 720 x 480
     1.78 ; 16:9 1920 x 1080, 1280 x 720, 858 x 480, 640 x 360, 426 x 240
@@ -83,7 +83,7 @@ Options are width, height, border")
     )
   "Aspect-ratio list.")
 
-(defconst aspect-ratio-video-list
+(defconst exwm-aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
     "avi" ; Audio Video Interleave
     "mp4" ; MPEG-4 Part 14
@@ -99,64 +99,64 @@ Options are width, height, border")
     )
   "Aspect-ratio video list.")
 
-(defun aspect-ratio-w(&optional ar)
+(defun exwm-aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
   (interactive)
-  (let* ((index (cond ((nth (1+ aspect-ratio-index) aspect-ratio-list)
-                       (1+ aspect-ratio-index))
+  (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
+                       (1+ exwm-aspect-ratio-index))
                       (t 0)))
          (aspect-ratio (cond (ar ar)
-                             (t (nth index aspect-ratio-list))))
+                             (t (nth index exwm-aspect-ratio-list))))
          (height (+ (round (/ (window-pixel-width)
                               aspect-ratio))
                     (window-mode-line-height)
                     1)))
     (if (not ar)
-        (setq aspect-ratio-index index))
+        (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- height (window-pixel-height)) nil nil t))
     (message "aspect ratio(%s): %s"
              (propertize "W" 'face
-                         `(:foreground ,aspect-ratio-W-color))
+                         `(:foreground ,exwm-aspect-ratio-W-color))
              (propertize (number-to-string aspect-ratio) 'face
-                         `(:foreground ,aspect-ratio-ar-color)))))
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun aspect-ratio-h(&optional ar)
+(defun exwm-aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
   (interactive)
-  (let* ((index (cond ((nth (1+ aspect-ratio-index) aspect-ratio-list)
-                       (1+ aspect-ratio-index))
+  (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
+                       (1+ exwm-aspect-ratio-index))
                       (t 0)))
          (aspect-ratio (cond (ar ar)
-                             (t (nth index aspect-ratio-list))))
+                             (t (nth index exwm-aspect-ratio-list))))
          (width (round (* (- (window-pixel-height)
                              (window-mode-line-height))
                           aspect-ratio))))
     (if (not ar)
-        (setq aspect-ratio-index index))
+        (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
     (message "aspect ratio(%s): %s"
              (propertize "H" 'face
-                         `(:foreground ,aspect-ratio-H-color))
+                         `(:foreground ,exwm-aspect-ratio-H-color))
              (propertize (number-to-string aspect-ratio) 'face
-                         `(:foreground ,aspect-ratio-ar-color)))))
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun aspect-ratio-t()
-  "Toggle between aspect-ratio-w and aspect-ratio-h."
+(defun exwm-aspect-ratio-t()
+  "Toggle between exwm-aspect-ratio-w and exwm-aspect-ratio-h."
   (interactive)
   (balance-windows)
-  (if aspect-ratio-toggle
-      (progn (setq aspect-ratio-toggle nil)
-             (aspect-ratio-h))
-    (progn (setq aspect-ratio-toggle t)
-           (aspect-ratio-w))))
+  (if exwm-aspect-ratio-toggle
+      (progn (setq exwm-aspect-ratio-toggle nil)
+             (exwm-aspect-ratio-h))
+    (progn (setq exwm-aspect-ratio-toggle t)
+           (exwm-aspect-ratio-w))))
 
-(defun aspect-ratio-get(file)
+(defun exwm-aspect-ratio-get(file)
   "Get original aspect-ratio from FILE using ffprobe.
 Ffprobe is a part of the ffmpeg package."
   (interactive)
-  (when (member (file-name-extension file) aspect-ratio-video-list)
+  (when (member (file-name-extension file) exwm-aspect-ratio-video-list)
     (let*
         ((outfile (replace-regexp-in-string "[][() ]" "\\\\\\&" file))
          (output
@@ -186,48 +186,48 @@ Ffprobe is a part of the ffmpeg package."
          (ar (format "%0.2f" string-ar)))
       (message "aspect ratio: %s"
                (propertize ar 'face
-                           `(:foreground ,aspect-ratio-ar-color)))
-      (setq aspect-ratio-ar (string-to-number ar)))))
+                           `(:foreground ,exwm-aspect-ratio-ar-color)))
+      (setq exwm-aspect-ratio-ar (string-to-number ar)))))
 
-(defun aspect-ratio-open(file)
+(defun exwm-aspect-ratio-open(file)
   "Open with original aspect-ratio from FILE."
   (interactive)
-  (let ((ar (aspect-ratio-get file)))
+  (let ((ar (exwm-aspect-ratio-get file)))
     (when ar
-      (if (string= aspect-ratio-fixed 'width)
-          (aspect-ratio-w ar)
-        (if(string= aspect-ratio-fixed 'height)
-            (aspect-ratio-h ar)
-          (if (> ar aspect-ratio-border)
-              (aspect-ratio-h ar)
-            (aspect-ratio-w ar))))
+      (if (string= exwm-aspect-ratio-fixed 'width)
+          (exwm-aspect-ratio-w ar)
+        (if(string= exwm-aspect-ratio-fixed 'height)
+            (exwm-aspect-ratio-h ar)
+          (if (> ar exwm-aspect-ratio-border)
+              (exwm-aspect-ratio-h ar)
+            (exwm-aspect-ratio-w ar))))
       (start-process
-       aspect-ratio-player-processname nil aspect-ratio-player file))))
+       exwm-aspect-ratio-player-processname nil exwm-aspect-ratio-player file))))
 
-(defun aspect-ratio-open-in-dired()
+(defun exwm-aspect-ratio-open-in-dired()
   "Open with original aspect-ratio from file in dired."
   (interactive)
   (let* ((file (dired-get-filename nil t))
-         (ar (aspect-ratio-get file)))
+         (ar (exwm-aspect-ratio-get file)))
     (when ar
-      (if (string= aspect-ratio-fixed 'width)
-          (aspect-ratio-w ar)
-        (if(string= aspect-ratio-fixed 'height)
-            (aspect-ratio-h ar)
-          (if (> ar aspect-ratio-border)
-              (aspect-ratio-h ar)
-            (aspect-ratio-w ar))))
+      (if (string= exwm-aspect-ratio-fixed 'width)
+          (exwm-aspect-ratio-w ar)
+        (if(string= exwm-aspect-ratio-fixed 'height)
+            (exwm-aspect-ratio-h ar)
+          (if (> ar exwm-aspect-ratio-border)
+              (exwm-aspect-ratio-h ar)
+            (exwm-aspect-ratio-w ar))))
       (start-process
-       aspect-ratio-player-processname nil aspect-ratio-player file))))
+       exwm-aspect-ratio-player-processname nil exwm-aspect-ratio-player file))))
 
 ;; default key
 ;; just example, you can customize it.
 ;; use C-x z (repeat) after a command
 ;; use exwm-input-set-key for exwm
-(global-set-key (kbd "C-c 1") 'aspect-ratio-t)
-(global-set-key (kbd "C-c 2") 'aspect-ratio-w)
-(global-set-key (kbd "C-c 3") 'aspect-ratio-h)
-(define-key dired-mode-map (kbd "C-<return>") 'aspect-ratio-open-in-dired)
+(global-set-key (kbd "C-c 1") 'exwm-aspect-ratio-t)
+(global-set-key (kbd "C-c 2") 'exwm-aspect-ratio-w)
+(global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
+(define-key dired-mode-map (kbd "C-<return>") 'exwm-aspect-ratio-open-in-dired)
 
-(provide 'aspect-ratio)
-;;; aspect-ratio.el ends here
+(provide 'exwm-aspect-ratio)
+;;; exwm-aspect-ratio.el ends here
