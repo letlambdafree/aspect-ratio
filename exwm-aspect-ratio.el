@@ -25,6 +25,8 @@
 ;; This package is useful playing a video file in exwm(tiling window manager).
 ;;
 ;; It can resize a window with the file's original aspect-ratio.
+;;
+;; so, you do not have to see black bars.
 
 ;;; Code:
 
@@ -71,7 +73,6 @@ Options are width, height, border")
 (defconst exwm-aspect-ratio-player-processname
   "aspect-ratio-mpv"
   "Player-processname for playing a movie file.")
-
 
 (defconst exwm-aspect-ratio-list
   '(1.33 ; 4:3 800 x 600
@@ -229,7 +230,8 @@ Ffprobe is a part of the ffmpeg package."
 (global-set-key (kbd "C-c 1") 'exwm-aspect-ratio-t)
 (global-set-key (kbd "C-c 2") 'exwm-aspect-ratio-w)
 (global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
-(define-key dired-mode-map (kbd "C-<return>") 'exwm-aspect-ratio-open-in-dired)
+(define-key
+  dired-mode-map (kbd "C-<return>") 'exwm-aspect-ratio-open-in-dired)
 
 (provide 'exwm-aspect-ratio)
 ;;; exwm-aspect-ratio.el ends here
