@@ -36,6 +36,10 @@
   0
   "Index for aspect-ratio.")
 
+(defvar exwm-aspect-ratio-zoom-index
+  1
+  "Index for aspect-ratio-zoom.")
+
 (defvar exwm-aspect-ratio-toggle
   nil
   "Toggle flag for aspect-ratio.")
@@ -86,14 +90,11 @@ Options are width, height, both")
 
 (defconst exwm-aspect-ratio-zoom-list
   '(0.50
-    0.75
     1.00
-    1.25
     1.50
-    1.75
     2.00
     )
-  "Aspect-ratio list.")
+  "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
