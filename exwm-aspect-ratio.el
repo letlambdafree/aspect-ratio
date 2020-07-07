@@ -28,6 +28,10 @@
 ;;
 ;; so, you do not have to see black bars.
 
+;; TODO:
+;; zoom 0.5 1 1.5 2
+
+
 ;;; Code:
 
 (require 'dired)
@@ -36,9 +40,9 @@
   0
   "Index for aspect-ratio.")
 
-(defvar exwm-aspect-ratio-zoom-index
-  1
-  "Index for aspect-ratio-zoom.")
+;; (defvar exwm-aspect-ratio-zoom-index
+;;   1
+;;   "Index for aspect-ratio-zoom.")
 
 (defvar exwm-aspect-ratio-toggle
   nil
@@ -88,13 +92,13 @@ Options are width, height, both")
     )
   "Aspect-ratio list.")
 
-(defconst exwm-aspect-ratio-zoom-list
-  '(0.50
-    1.00
-    1.50
-    2.00
-    )
-  "Aspect-ratio zoom list.")
+;; (defconst exwm-aspect-ratio-zoom-list
+;;   '(0.50
+;;     1.00
+;;     1.50
+;;     2.00
+;;     )
+;;   "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
