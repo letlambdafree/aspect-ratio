@@ -102,7 +102,8 @@ Options are width, height, border")
 (defun exwm-aspect-ratio-w(&optional ar)
   "Fixed width with optional AR."
   (interactive)
-  (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
+  (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index)
+                            exwm-aspect-ratio-list)
                        (1+ exwm-aspect-ratio-index))
                       (t 0)))
          (aspect-ratio (cond (ar ar)
@@ -124,7 +125,8 @@ Options are width, height, border")
 (defun exwm-aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
   (interactive)
-  (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index) exwm-aspect-ratio-list)
+  (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index)
+                            exwm-aspect-ratio-list)
                        (1+ exwm-aspect-ratio-index))
                       (t 0)))
          (aspect-ratio (cond (ar ar)
@@ -201,8 +203,8 @@ Ffprobe is a part of the ffmpeg package."
           (if (> ar exwm-aspect-ratio-border)
               (exwm-aspect-ratio-h ar)
             (exwm-aspect-ratio-w ar))))
-      (start-process
-       exwm-aspect-ratio-player-processname nil exwm-aspect-ratio-player file))))
+      (start-process exwm-aspect-ratio-player-processname
+                     nil exwm-aspect-ratio-player file))))
 
 (defun exwm-aspect-ratio-open-in-dired()
   "Open with original aspect-ratio from file in dired."
@@ -217,8 +219,8 @@ Ffprobe is a part of the ffmpeg package."
           (if (> ar exwm-aspect-ratio-border)
               (exwm-aspect-ratio-h ar)
             (exwm-aspect-ratio-w ar))))
-      (start-process
-       exwm-aspect-ratio-player-processname nil exwm-aspect-ratio-player file))))
+      (start-process exwm-aspect-ratio-player-processname
+                     nil exwm-aspect-ratio-player file))))
 
 ;; default key
 ;; just example, you can customize it.
