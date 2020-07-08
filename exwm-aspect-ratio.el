@@ -30,6 +30,7 @@
 
 ;; TODO:
 ;; zoom 0.5 1 1.5 2
+;; absolutely or relatively
 
 
 ;;; Code:
