@@ -253,7 +253,6 @@ Ffprobe is a part of the ffmpeg package."
 (defun exwm-aspect-ratio-shrink()
   "Shrink the selected window with original aspect-ratio."
   (interactive)
-  (interactive)
   (let* ((width (round (* (- (* window-pixel-height 0.5)
                              (window-mode-line-height))
                           exwm-aspect-ratio-ar))))
