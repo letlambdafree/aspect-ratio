@@ -28,11 +28,6 @@
 ;;
 ;; so, you do not have to see black bars.
 
-;; TODO:
-;; zoom 0.5 1 1.5 2
-;; absolutely or relatively
-
-
 ;;; Code:
 
 (require 'dired)
@@ -41,9 +36,9 @@
   0
   "Index for aspect-ratio.")
 
-;; (defvar exwm-aspect-ratio-zoom-index
-;;   1
-;;   "Index for aspect-ratio-zoom.")
+(defvar exwm-aspect-ratio-zoom-index
+  1
+  "Index for aspect-ratio-zoom.")
 
 (defvar exwm-aspect-ratio-toggle
   nil
@@ -93,13 +88,12 @@ Options are width, height, both")
     )
   "Aspect-ratio list.")
 
-;; (defconst exwm-aspect-ratio-zoom-list
-;;   '(0.50
-;;     1.00
-;;     1.50
-;;     2.00
-;;     )
-;;   "Aspect-ratio zoom list.")
+(defconst exwm-aspect-ratio-zoom-list
+  '(0.50
+    1.00
+    1.50
+    )
+  "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
@@ -134,6 +128,7 @@ Options are width, height, both")
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- height (window-pixel-height)) nil nil t))
+    (setq exwm-aspect-ratio-ar (string-to-number aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "W" 'face
                          `(:foreground ,exwm-aspect-ratio-W-color))
@@ -156,6 +151,7 @@ Options are width, height, both")
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
+    (setq exwm-aspect-ratio-ar (string-to-number aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "H" 'face
                          `(:foreground ,exwm-aspect-ratio-H-color))
@@ -239,6 +235,35 @@ Ffprobe is a part of the ffmpeg package."
             (exwm-aspect-ratio-w ar))))
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
+
+(defun exwm-aspect-ratio-enlarge()
+  "Enlarge the selected window with original aspect-ratio."
+  (interactive)
+  (let* ((width (round (* (- (* window-pixel-height 1.5)
+                             (window-mode-line-height))
+                          exwm-aspect-ratio-ar))))
+    (ignore-errors
+      (window-resize nil (- width (window-pixel-width)) t nil t))
+    (message "aspect ratio(%s): %s"
+             (propertize "H" 'face
+                         `(:foreground ,exwm-aspect-ratio-H-color))
+             (propertize (number-to-string aspect-ratio) 'face
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
+
+(defun exwm-aspect-ratio-shrink()
+  "Shrink the selected window with original aspect-ratio."
+  (interactive)
+  (interactive)
+  (let* ((width (round (* (- (* window-pixel-height 0.5)
+                             (window-mode-line-height))
+                          exwm-aspect-ratio-ar))))
+    (ignore-errors
+      (window-resize nil (- width (window-pixel-width)) t nil t))
+    (message "aspect ratio(%s): %s"
+             (propertize "H" 'face
+                         `(:foreground ,exwm-aspect-ratio-H-color))
+             (propertize (number-to-string aspect-ratio) 'face
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 ;; default key
 ;; just example, you can customize it.
