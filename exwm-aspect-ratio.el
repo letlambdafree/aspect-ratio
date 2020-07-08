@@ -128,12 +128,14 @@ Options are width, height, both")
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- height (window-pixel-height)) nil nil t))
-    (setq exwm-aspect-ratio-ar (string-to-number aspect-ratio))
+    (setq exwm-aspect-ratio-ar (if (stringp aspect-ratio)
+                                   (string-to-number aspect-ratio)
+                                 aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "W" 'face
                          `(:foreground ,exwm-aspect-ratio-W-color))
-             (propertize (number-to-string aspect-ratio) 'face
-                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
+             (propertize (number-to-string aspect-ratio)
+                         'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-h(&optional ar)
   "Fixed height with optional AR."
@@ -151,7 +153,9 @@ Options are width, height, both")
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
-    (setq exwm-aspect-ratio-ar (string-to-number aspect-ratio))
+    (setq exwm-aspect-ratio-ar (if (stringp aspect-ratio)
+                                   (string-to-number aspect-ratio)
+                                 aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "H" 'face
                          `(:foreground ,exwm-aspect-ratio-H-color))
@@ -239,29 +243,37 @@ Ffprobe is a part of the ffmpeg package."
 (defun exwm-aspect-ratio-enlarge()
   "Enlarge the selected window with original aspect-ratio."
   (interactive)
-  (let* ((width (round (* (- (* window-pixel-height 1.5)
-                             (window-mode-line-height))
-                          exwm-aspect-ratio-ar))))
+  (if (not exwm-aspect-ratio-ar)
+      (setq exwm-aspect-ratio-ar 1.78))
+  (let ((width (round (* (- (* (window-pixel-height)
+                               1.05)
+                            (window-mode-line-height))
+                         exwm-aspect-ratio-ar))))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
+    (exwm-aspect-ratio-w exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
-             (propertize "H" 'face
+             (propertize "E" 'face
                          `(:foreground ,exwm-aspect-ratio-H-color))
-             (propertize (number-to-string aspect-ratio) 'face
+             (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-shrink()
   "Shrink the selected window with original aspect-ratio."
   (interactive)
-  (let* ((width (round (* (- (* window-pixel-height 0.5)
-                             (window-mode-line-height))
-                          exwm-aspect-ratio-ar))))
+  (if (not exwm-aspect-ratio-ar)
+      (setq exwm-aspect-ratio-ar 1.78))
+  (let ((width (round (* (- (* (window-pixel-height)
+                               0.95)
+                            (window-mode-line-height))
+                         exwm-aspect-ratio-ar))))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
+    (exwm-aspect-ratio-w exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
-             (propertize "H" 'face
+             (propertize "S" 'face
                          `(:foreground ,exwm-aspect-ratio-H-color))
-             (propertize (number-to-string aspect-ratio) 'face
+             (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 ;; default key
