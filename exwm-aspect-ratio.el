@@ -332,6 +332,8 @@ Ffprobe is a part of the ffmpeg package."
 (global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-height)
 (global-set-key (kbd "C-c =") 'exwm-aspect-ratio-enlarge)
 (global-set-key (kbd "C-c -") 'exwm-aspect-ratio-shrink)
+(global-set-key (kbd "C-c C-=") 'exwm-aspect-ratio-zoom+)
+(global-set-key (kbd "C-c C--") 'exwm-aspect-ratio-zoom-)
 (define-key
   dired-mode-map (kbd "C-<return>") 'exwm-aspect-ratio-open-in-dired)
 
