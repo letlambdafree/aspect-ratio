@@ -56,7 +56,7 @@
   "green"
   "W color for message.")
 
-(defconst exwm-aspect-ratio-H-color
+(defconst exwm-aspect-ratio-height-color
   "green"
   "H color for message.")
 
@@ -145,7 +145,7 @@ Options are width, height, both")
              (propertize (number-to-string aspect-ratio)
                          'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio-h(&optional ar)
+(defun exwm-aspect-ratio-height(&optional ar)
   "Fixed height with optional AR."
   (interactive)
   (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index)
@@ -166,17 +166,17 @@ Options are width, height, both")
                                  aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "H" 'face
-                         `(:foreground ,exwm-aspect-ratio-H-color))
+                         `(:foreground ,exwm-aspect-ratio-height-color))
              (propertize (number-to-string aspect-ratio) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-toggle()
-  "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-h."
+  "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
   (interactive)
   (balance-windows)
   (if exwm-aspect-ratio-toggle
       (progn (setq exwm-aspect-ratio-toggle nil)
-             (exwm-aspect-ratio-h))
+             (exwm-aspect-ratio-height))
     (progn (setq exwm-aspect-ratio-toggle t)
            (exwm-aspect-ratio-width))))
 
@@ -225,9 +225,9 @@ Ffprobe is a part of the ffmpeg package."
       (if (string= exwm-aspect-ratio-fixed 'width)
           (exwm-aspect-ratio-width ar)
         (if(string= exwm-aspect-ratio-fixed 'height)
-            (exwm-aspect-ratio-h ar)
+            (exwm-aspect-ratio-height ar)
           (if (> ar exwm-aspect-ratio-both)
-              (exwm-aspect-ratio-h ar)
+              (exwm-aspect-ratio-height ar)
             (exwm-aspect-ratio-width ar))))
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
@@ -241,9 +241,9 @@ Ffprobe is a part of the ffmpeg package."
       (if (string= exwm-aspect-ratio-fixed 'width)
           (exwm-aspect-ratio-width ar)
         (if(string= exwm-aspect-ratio-fixed 'height)
-            (exwm-aspect-ratio-h ar)
+            (exwm-aspect-ratio-height ar)
           (if (> ar exwm-aspect-ratio-both)
-              (exwm-aspect-ratio-h ar)
+              (exwm-aspect-ratio-height ar)
             (exwm-aspect-ratio-width ar))))
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
@@ -262,7 +262,7 @@ Ffprobe is a part of the ffmpeg package."
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
              (propertize "E" 'face
-                         `(:foreground ,exwm-aspect-ratio-H-color))
+                         `(:foreground ,exwm-aspect-ratio-height-color))
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
@@ -280,7 +280,7 @@ Ffprobe is a part of the ffmpeg package."
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
              (propertize "S" 'face
-                         `(:foreground ,exwm-aspect-ratio-H-color))
+                         `(:foreground ,exwm-aspect-ratio-height-color))
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
@@ -289,7 +289,7 @@ Ffprobe is a part of the ffmpeg package."
 ;; use C-x z (repeat) after a command
 (global-set-key (kbd "C-c 1") 'exwm-aspect-ratio-toggle)
 (global-set-key (kbd "C-c 2") 'exwm-aspect-ratio-width)
-(global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
+(global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-height)
 (global-set-key (kbd "C-c =") 'exwm-aspect-ratio-enlarge)
 (global-set-key (kbd "C-c -") 'exwm-aspect-ratio-shrink)
 (define-key
