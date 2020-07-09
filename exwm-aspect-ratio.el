@@ -312,6 +312,18 @@ Ffprobe is a part of the ffmpeg package."
     (setq exwm-aspect-ratio-zoom-index index)
     (exwm-aspect-ratio-enlarge zoom-ratio)))
 
+(defun exwm-aspect-ratio-zoom-(&optional zoom)
+  "Zoom with ZOOM list."
+  (interactive)
+  (if (<= exwm-aspect-ratio-zoom-index 0)
+      (setq exwm-aspect-ratio-zoom-index
+            (length exwm-aspect-ratio-zoom-list)))
+  (let* ((index (1- exwm-aspect-ratio-zoom-index))
+         (zoom-ratio (cond (zoom zoom)
+                           (t (nth index exwm-aspect-ratio-zoom-list)))))
+    (setq exwm-aspect-ratio-zoom-index index)
+    (exwm-aspect-ratio-enlarge zoom-ratio)))
+
 ;; default key
 ;; just example, you can customize it.
 ;; use C-x z (repeat) after a command
