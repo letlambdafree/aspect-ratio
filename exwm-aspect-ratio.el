@@ -75,7 +75,7 @@ Options are width, height, both")
 
 (defconst exwm-aspect-ratio-both
   2
-  "Number for splitting aspect-ratios to two area.")
+  "Number for splitting aspect-ratios.")
 
 (defconst exwm-aspect-ratio-player
   ;; "mpv"
@@ -97,9 +97,14 @@ Options are width, height, both")
   "Aspect-ratio list.")
 
 (defconst exwm-aspect-ratio-zoom-list
-  '(0.50
+  '(0.25
+    0.50
+    0.75
     1.00
+    1.25
     1.50
+    1.75
+    2.00
     )
   "Aspect-ratio zoom list.")
 
@@ -256,39 +261,45 @@ Ffprobe is a part of the ffmpeg package."
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
 
-(defun exwm-aspect-ratio-enlarge()
-  "Enlarge the selected window with original aspect-ratio."
+(defun exwm-aspect-ratio-enlarge(&optional zoom)
+  "Enlarge the selected window with ZOOM."
   (interactive)
   (if (not exwm-aspect-ratio-ar)
       (setq exwm-aspect-ratio-ar 1.78))
-  (let ((width (round (* (- (* (window-pixel-height)
-                               exwm-aspect-ratio-enlarge-n)
-                            (window-mode-line-height))
-                         exwm-aspect-ratio-ar))))
+  (let* ((zoom-enlarge (cond (zoom zoom)
+                             (t exwm-aspect-ratio-enlarge-n)))
+         (width (round (* (- (* (window-pixel-height)
+                                zoom-enlarge)
+                             (window-mode-line-height))
+                          exwm-aspect-ratio-ar)))
+         (enlarge-string  (if zoom zoom "E")))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
-             (propertize "E" 'face
-                         `(:foreground ,exwm-aspect-ratio-height-color))
+             (propertize enlarge-string 'face
+                         `(:foreground ,exwm-aspect-ratio-enlarge-color))
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio-shrink()
-  "Shrink the selected window with original aspect-ratio."
+(defun exwm-aspect-ratio-shrink(&optional zoom)
+  "Shrink the selected window with ZOOM."
   (interactive)
   (if (not exwm-aspect-ratio-ar)
       (setq exwm-aspect-ratio-ar 1.78))
-  (let ((width (round (* (- (* (window-pixel-height)
-                               exwm-aspect-ratio-shrink-n)
-                            (window-mode-line-height))
-                         exwm-aspect-ratio-ar))))
+  (let* ((zoom-shrink (cond (zoom zoom)
+                            (t exwm-aspect-ratio-shrink-n)))
+         (width (round (* (- (* (window-pixel-height)
+                                zoom-shrink)
+                             (window-mode-line-height))
+                          exwm-aspect-ratio-ar)))
+         (shrink-string  (if zoom zoom "S")))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
-             (propertize "S" 'face
-                         `(:foreground ,exwm-aspect-ratio-height-color))
+             (propertize shrink-string 'face
+                         `(:foreground ,exwm-aspect-ratio-shrink-color))
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
