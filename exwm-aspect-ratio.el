@@ -52,7 +52,7 @@
   "red"
   "Aspect-ratio color for message.")
 
-(defconst exwm-aspect-ratio-W-color
+(defconst exwm-aspect-ratio-width-color
   "green"
   "W color for message.")
 
@@ -119,7 +119,7 @@ Options are width, height, both")
     )
   "Aspect-ratio video list.")
 
-(defun exwm-aspect-ratio-w(&optional ar)
+(defun exwm-aspect-ratio-width(&optional ar)
   "Fixed width with optional AR."
   (interactive)
   (let* ((index (cond ((nth (1+ exwm-aspect-ratio-index)
@@ -141,7 +141,7 @@ Options are width, height, both")
                                  aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "W" 'face
-                         `(:foreground ,exwm-aspect-ratio-W-color))
+                         `(:foreground ,exwm-aspect-ratio-width-color))
              (propertize (number-to-string aspect-ratio)
                          'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
@@ -171,14 +171,14 @@ Options are width, height, both")
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-toggle()
-  "Toggle between exwm-aspect-ratio-w and exwm-aspect-ratio-h."
+  "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-h."
   (interactive)
   (balance-windows)
   (if exwm-aspect-ratio-toggle
       (progn (setq exwm-aspect-ratio-toggle nil)
              (exwm-aspect-ratio-h))
     (progn (setq exwm-aspect-ratio-toggle t)
-           (exwm-aspect-ratio-w))))
+           (exwm-aspect-ratio-width))))
 
 (defun exwm-aspect-ratio-get(file)
   "Get original aspect-ratio from FILE using ffprobe.
@@ -223,12 +223,12 @@ Ffprobe is a part of the ffmpeg package."
   (let ((ar (exwm-aspect-ratio-get file)))
     (when ar
       (if (string= exwm-aspect-ratio-fixed 'width)
-          (exwm-aspect-ratio-w ar)
+          (exwm-aspect-ratio-width ar)
         (if(string= exwm-aspect-ratio-fixed 'height)
             (exwm-aspect-ratio-h ar)
           (if (> ar exwm-aspect-ratio-both)
               (exwm-aspect-ratio-h ar)
-            (exwm-aspect-ratio-w ar))))
+            (exwm-aspect-ratio-width ar))))
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
 
@@ -239,12 +239,12 @@ Ffprobe is a part of the ffmpeg package."
          (ar (exwm-aspect-ratio-get file)))
     (when ar
       (if (string= exwm-aspect-ratio-fixed 'width)
-          (exwm-aspect-ratio-w ar)
+          (exwm-aspect-ratio-width ar)
         (if(string= exwm-aspect-ratio-fixed 'height)
             (exwm-aspect-ratio-h ar)
           (if (> ar exwm-aspect-ratio-both)
               (exwm-aspect-ratio-h ar)
-            (exwm-aspect-ratio-w ar))))
+            (exwm-aspect-ratio-width ar))))
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
 
@@ -259,7 +259,7 @@ Ffprobe is a part of the ffmpeg package."
                          exwm-aspect-ratio-ar))))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
-    (exwm-aspect-ratio-w exwm-aspect-ratio-ar)
+    (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
              (propertize "E" 'face
                          `(:foreground ,exwm-aspect-ratio-H-color))
@@ -277,7 +277,7 @@ Ffprobe is a part of the ffmpeg package."
                          exwm-aspect-ratio-ar))))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
-    (exwm-aspect-ratio-w exwm-aspect-ratio-ar)
+    (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
              (propertize "S" 'face
                          `(:foreground ,exwm-aspect-ratio-H-color))
@@ -288,7 +288,7 @@ Ffprobe is a part of the ffmpeg package."
 ;; just example, you can customize it.
 ;; use C-x z (repeat) after a command
 (global-set-key (kbd "C-c 1") 'exwm-aspect-ratio-toggle)
-(global-set-key (kbd "C-c 2") 'exwm-aspect-ratio-w)
+(global-set-key (kbd "C-c 2") 'exwm-aspect-ratio-width)
 (global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
 (global-set-key (kbd "C-c =") 'exwm-aspect-ratio-enlarge)
 (global-set-key (kbd "C-c -") 'exwm-aspect-ratio-shrink)
