@@ -254,7 +254,7 @@ Ffprobe is a part of the ffmpeg package."
   (if (not exwm-aspect-ratio-ar)
       (setq exwm-aspect-ratio-ar 1.78))
   (let ((width (round (* (- (* (window-pixel-height)
-                               1.05)
+                               exwm-aspect-ratio-enlarge-n)
                             (window-mode-line-height))
                          exwm-aspect-ratio-ar))))
     (ignore-errors
@@ -272,7 +272,7 @@ Ffprobe is a part of the ffmpeg package."
   (if (not exwm-aspect-ratio-ar)
       (setq exwm-aspect-ratio-ar 1.78))
   (let ((width (round (* (- (* (window-pixel-height)
-                               0.95)
+                               exwm-aspect-ratio-shrink-n)
                             (window-mode-line-height))
                          exwm-aspect-ratio-ar))))
     (ignore-errors
@@ -291,6 +291,8 @@ Ffprobe is a part of the ffmpeg package."
 (global-set-key (kbd "C-c 1") 'exwm-aspect-ratio-t)
 (global-set-key (kbd "C-c 2") 'exwm-aspect-ratio-w)
 (global-set-key (kbd "C-c 3") 'exwm-aspect-ratio-h)
+(global-set-key (kbd "C-c =") 'exwm-aspect-ratio-enlarge)
+(global-set-key (kbd "C-c -") 'exwm-aspect-ratio-shrink)
 (define-key
   dired-mode-map (kbd "C-<return>") 'exwm-aspect-ratio-open-in-dired)
 
