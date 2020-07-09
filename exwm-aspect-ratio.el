@@ -68,6 +68,10 @@
   "blue"
   "S color for message.")
 
+(defconst exwm-aspect-ratio-zoom-color
+  "HotPink"
+  "Z color for message.")
+
 (defconst exwm-aspect-ratio-fixed
   "width"
   "Determine which fixed.
@@ -262,19 +266,19 @@ Ffprobe is a part of the ffmpeg package."
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
 
-(defun exwm-aspect-ratio-enlarge(&optional zoom)
-  "Enlarge the selected window with ZOOM."
+(defun exwm-aspect-ratio-enlarge(&optional rate)
+  "Enlarge the selected window with RATE."
   (interactive)
   (let ((width (round (* (- (* (window-pixel-height)
                                exwm-aspect-ratio-enlarge-rate)
                             (window-mode-line-height))
                          exwm-aspect-ratio-ar)))
-        (enlarge-string  (if zoom
-                             (number-to-string zoom)
+        (enlarge-string  (if rate
+                             (number-to-string rate)
                            "E")))
     (ignore-errors
-      (if zoom
-          (window-resize nil (- (round (* (frame-pixel-width) zoom))
+      (if rate
+          (window-resize nil (- (round (* (frame-pixel-width) rate))
                                 (window-pixel-width))
                          t nil t)
         (window-resize nil (- width (window-pixel-width)) t nil t)))
@@ -285,17 +289,17 @@ Ffprobe is a part of the ffmpeg package."
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio-shrink(&optional zoom)
-  "Shrink the selected window with ZOOM."
+(defun exwm-aspect-ratio-shrink(&optional rate)
+  "Shrink the selected window with RATE."
   (interactive)
-  (let* ((zoom-shrink (cond (zoom zoom)
+  (let* ((shrink-rate (cond (rate rate)
                             (t exwm-aspect-ratio-shrink-rate)))
          (width (round (* (- (* (window-pixel-height)
-                                zoom-shrink)
+                                shrink-rate)
                              (window-mode-line-height))
                           exwm-aspect-ratio-ar)))
-         (shrink-string  (if zoom
-                             (number-to-string zoom)
+         (shrink-string  (if rate
+                             (number-to-string rate)
                            "S")))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
@@ -305,6 +309,25 @@ Ffprobe is a part of the ffmpeg package."
                          `(:foreground ,exwm-aspect-ratio-shrink-color))
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
+
+(defun exwm-aspect-ratio-zoom(rate)
+  "Zoom the selected window with RATE."
+  (interactive)
+  (let ((width (round (* (- (* (window-pixel-height)
+                               exwm-aspect-ratio-enlarge-rate)
+                            (window-mode-line-height))
+                         exwm-aspect-ratio-ar))))
+    (ignore-errors
+      (window-resize nil (- (round (* (frame-pixel-width) rate))
+                            (window-pixel-width))
+                     t nil t))
+    (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
+    (message "aspect ratio(%s): %s"
+             (propertize (number-to-string rate) 'face
+                         `(:foreground ,exwm-aspect-ratio-zoom-color))
+             (propertize (number-to-string exwm-aspect-ratio-ar) 'face
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
+
 
 (defun exwm-aspect-ratio-zoom+()
   "Zoom forward with zoom list."
