@@ -37,7 +37,7 @@
   "Index for aspect-ratio.")
 
 (defvar exwm-aspect-ratio-zoom-index
-  4
+  0
   "Index for aspect-ratio-zoom.")
 
 (defvar exwm-aspect-ratio-toggle
@@ -97,18 +97,24 @@ Options are width, height, both")
   "Aspect-ratio list.")
 
 (defconst exwm-aspect-ratio-zoom-list
-  '(0.25
+  '(0.10
+    0.20
+    0.30
+    0.40
     0.50
-    0.75
+    0.60
+    0.70
+    0.80
+    0.90
     )
   "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-enlarge-n
-  1.05
+  1.03
   "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-shrink-n
-  0.95
+  0.97
   "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-video-list
@@ -265,7 +271,9 @@ Ffprobe is a part of the ffmpeg package."
                                exwm-aspect-ratio-enlarge-n)
                             (window-mode-line-height))
                          exwm-aspect-ratio-ar)))
-        (enlarge-string  (if zoom (number-to-string zoom) "E")))
+        (enlarge-string  (if zoom
+                             (number-to-string zoom)
+                           "E")))
     (ignore-errors
       (if zoom
           (window-resize nil (- (round (* (frame-pixel-width) zoom))
@@ -290,7 +298,9 @@ Ffprobe is a part of the ffmpeg package."
                                 zoom-shrink)
                              (window-mode-line-height))
                           exwm-aspect-ratio-ar)))
-         (shrink-string  (if zoom (number-to-string zoom) "S")))
+         (shrink-string  (if zoom
+                             (number-to-string zoom)
+                           "S")))
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
@@ -301,7 +311,7 @@ Ffprobe is a part of the ffmpeg package."
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-zoom+(&optional zoom)
-  "Zoom with ZOOM list."
+  "Zoom forward with ZOOM list."
   (interactive)
   (let* ((index (cond ((nth (1+ exwm-aspect-ratio-zoom-index)
                             exwm-aspect-ratio-zoom-list)
@@ -313,7 +323,7 @@ Ffprobe is a part of the ffmpeg package."
     (exwm-aspect-ratio-enlarge zoom-ratio)))
 
 (defun exwm-aspect-ratio-zoom-(&optional zoom)
-  "Zoom with ZOOM list."
+  "Zoom backward with ZOOM list."
   (interactive)
   (if (<= exwm-aspect-ratio-zoom-index 0)
       (setq exwm-aspect-ratio-zoom-index
