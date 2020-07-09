@@ -45,7 +45,7 @@
   "Toggle flag for aspect-ratio.")
 
 (defvar exwm-aspect-ratio-ar
-  nil
+  1.78
   "Aspect-ratio for file.")
 
 (defconst exwm-aspect-ratio-ar-color
@@ -265,8 +265,6 @@ Ffprobe is a part of the ffmpeg package."
 (defun exwm-aspect-ratio-enlarge(&optional zoom)
   "Enlarge the selected window with ZOOM."
   (interactive)
-  (if (not exwm-aspect-ratio-ar)
-      (setq exwm-aspect-ratio-ar 1.78))
   (let ((width (round (* (- (* (window-pixel-height)
                                exwm-aspect-ratio-enlarge-n)
                             (window-mode-line-height))
@@ -290,8 +288,6 @@ Ffprobe is a part of the ffmpeg package."
 (defun exwm-aspect-ratio-shrink(&optional zoom)
   "Shrink the selected window with ZOOM."
   (interactive)
-  (if (not exwm-aspect-ratio-ar)
-      (setq exwm-aspect-ratio-ar 1.78))
   (let* ((zoom-shrink (cond (zoom zoom)
                             (t exwm-aspect-ratio-shrink-n)))
          (width (round (* (- (* (window-pixel-height)
