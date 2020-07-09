@@ -306,29 +306,27 @@ Ffprobe is a part of the ffmpeg package."
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio-zoom+(&optional zoom)
-  "Zoom forward with ZOOM list."
+(defun exwm-aspect-ratio-zoom+()
+  "Zoom forward with zoom list."
   (interactive)
   (let* ((index (cond ((nth (1+ exwm-aspect-ratio-zoom-index)
                             exwm-aspect-ratio-zoom-list)
                        (1+ exwm-aspect-ratio-zoom-index))
                       (t 0)))
-         (zoom-ratio (cond (zoom zoom)
-                           (t (nth index exwm-aspect-ratio-zoom-list)))))
+         (zoom-ratio (nth index exwm-aspect-ratio-zoom-list)))
     (setq exwm-aspect-ratio-zoom-index index)
     (exwm-aspect-ratio-enlarge zoom-ratio)))
 
-(defun exwm-aspect-ratio-zoom-(&optional zoom)
-  "Zoom backward with ZOOM list."
-  (interactive)
-  (if (<= exwm-aspect-ratio-zoom-index 0)
-      (setq exwm-aspect-ratio-zoom-index
-            (length exwm-aspect-ratio-zoom-list)))
-  (let* ((index (1- exwm-aspect-ratio-zoom-index))
-         (zoom-ratio (cond (zoom zoom)
-                           (t (nth index exwm-aspect-ratio-zoom-list)))))
-    (setq exwm-aspect-ratio-zoom-index index)
-    (exwm-aspect-ratio-enlarge zoom-ratio)))
+(defun exwm-aspect-ratio-zoom-()
+"Zoom backward with zoom list."
+(interactive)
+(if (<= exwm-aspect-ratio-zoom-index 0)
+    (setq exwm-aspect-ratio-zoom-index
+          (length exwm-aspect-ratio-zoom-list)))
+(let* ((index (1- exwm-aspect-ratio-zoom-index))
+       (zoom-ratio (nth index exwm-aspect-ratio-zoom-list)))
+  (setq exwm-aspect-ratio-zoom-index index)
+  (exwm-aspect-ratio-enlarge zoom-ratio)))
 
 ;; default key
 ;; just example, you can customize it.
