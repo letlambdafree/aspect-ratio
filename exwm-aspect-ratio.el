@@ -61,11 +61,11 @@
   "H color for message.")
 
 (defconst exwm-aspect-ratio-enlarge-color
-  "green"
+  "blue"
   "E color for message.")
 
 (defconst exwm-aspect-ratio-shrink-color
-  "green"
+  "blue"
   "S color for message.")
 
 (defconst exwm-aspect-ratio-fixed
@@ -109,13 +109,13 @@ Options are width, height, both")
     )
   "Aspect-ratio zoom list.")
 
-(defconst exwm-aspect-ratio-enlarge-n
+(defconst exwm-aspect-ratio-enlarge-rate
   1.03
-  "Aspect-ratio zoom list.")
+  "Aspect-ratio enlarge rate.")
 
-(defconst exwm-aspect-ratio-shrink-n
+(defconst exwm-aspect-ratio-shrink-rate
   0.97
-  "Aspect-ratio zoom list.")
+  "Aspect-ratio shrink rate.")
 
 (defconst exwm-aspect-ratio-video-list
   '("mkv" ; Matroska Video Container
@@ -266,7 +266,7 @@ Ffprobe is a part of the ffmpeg package."
   "Enlarge the selected window with ZOOM."
   (interactive)
   (let ((width (round (* (- (* (window-pixel-height)
-                               exwm-aspect-ratio-enlarge-n)
+                               exwm-aspect-ratio-enlarge-rate)
                             (window-mode-line-height))
                          exwm-aspect-ratio-ar)))
         (enlarge-string  (if zoom
@@ -289,7 +289,7 @@ Ffprobe is a part of the ffmpeg package."
   "Shrink the selected window with ZOOM."
   (interactive)
   (let* ((zoom-shrink (cond (zoom zoom)
-                            (t exwm-aspect-ratio-shrink-n)))
+                            (t exwm-aspect-ratio-shrink-rate)))
          (width (round (* (- (* (window-pixel-height)
                                 zoom-shrink)
                              (window-mode-line-height))
