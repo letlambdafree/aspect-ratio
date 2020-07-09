@@ -322,7 +322,6 @@ Ffprobe is a part of the ffmpeg package."
            (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                        `(:foreground ,exwm-aspect-ratio-ar-color))))
 
-
 (defun exwm-aspect-ratio-zoom+()
   "Zoom forward with zoom list."
   (interactive)
