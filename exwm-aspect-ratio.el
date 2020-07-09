@@ -60,6 +60,10 @@
   "green"
   "H color for message.")
 
+(defconst exwm-aspect-ratio-enlarge-color
+  "green"
+  "E color for message.")
+
 (defconst exwm-aspect-ratio-fixed
   "width"
   "Determine which fixed.
