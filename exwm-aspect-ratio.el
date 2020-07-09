@@ -313,9 +313,9 @@ Ffprobe is a part of the ffmpeg package."
                             exwm-aspect-ratio-zoom-list)
                        (1+ exwm-aspect-ratio-zoom-index))
                       (t 0)))
-         (zoom-ratio (nth index exwm-aspect-ratio-zoom-list)))
+         (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
     (setq exwm-aspect-ratio-zoom-index index)
-    (exwm-aspect-ratio-enlarge zoom-ratio)))
+    (exwm-aspect-ratio-enlarge zoom-rate)))
 
 (defun exwm-aspect-ratio-zoom-()
 "Zoom backward with zoom list."
@@ -324,9 +324,9 @@ Ffprobe is a part of the ffmpeg package."
     (setq exwm-aspect-ratio-zoom-index
           (length exwm-aspect-ratio-zoom-list)))
 (let* ((index (1- exwm-aspect-ratio-zoom-index))
-       (zoom-ratio (nth index exwm-aspect-ratio-zoom-list)))
+       (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
   (setq exwm-aspect-ratio-zoom-index index)
-  (exwm-aspect-ratio-enlarge zoom-ratio)))
+  (exwm-aspect-ratio-enlarge zoom-rate)))
 
 ;; default key
 ;; just example, you can customize it.
