@@ -269,19 +269,17 @@ Ffprobe is a part of the ffmpeg package."
 (defun exwm-aspect-ratio-enlarge(&optional rate)
   "Enlarge the selected window with RATE."
   (interactive)
-  (let ((width (round (* (- (* (window-pixel-height)
-                               exwm-aspect-ratio-enlarge-rate)
-                            (window-mode-line-height))
-                         exwm-aspect-ratio-ar)))
-        (enlarge-string  (if rate
-                             (number-to-string rate)
-                           "E")))
+  (let* ((enlarge-rate (cond (rate rate)
+                             (t exwm-aspect-ratio-enlarge-rate)))
+         (width (round (* (- (* (window-pixel-height)
+                                enlarge-rate)
+                             (window-mode-line-height))
+                          exwm-aspect-ratio-ar)))
+         (enlarge-string  (if rate
+                              (number-to-string rate)
+                            "E")))
     (ignore-errors
-      (if rate
-          (window-resize nil (- (round (* (frame-pixel-width) rate))
-                                (window-pixel-width))
-                         t nil t)
-        (window-resize nil (- width (window-pixel-width)) t nil t)))
+      (window-resize nil (- width (window-pixel-width)) t nil t))
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
     (message "aspect ratio(%s): %s"
              (propertize enlarge-string 'face
@@ -313,20 +311,16 @@ Ffprobe is a part of the ffmpeg package."
 (defun exwm-aspect-ratio-zoom(rate)
   "Zoom the selected window with RATE."
   (interactive)
-  (let ((width (round (* (- (* (window-pixel-height)
-                               exwm-aspect-ratio-enlarge-rate)
-                            (window-mode-line-height))
-                         exwm-aspect-ratio-ar))))
-    (ignore-errors
-      (window-resize nil (- (round (* (frame-pixel-width) rate))
-                            (window-pixel-width))
-                     t nil t))
-    (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
-    (message "aspect ratio(%s): %s"
-             (propertize (number-to-string rate) 'face
-                         `(:foreground ,exwm-aspect-ratio-zoom-color))
-             (propertize (number-to-string exwm-aspect-ratio-ar) 'face
-                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
+  (ignore-errors
+    (window-resize nil (- (round (* (frame-pixel-width) rate))
+                          (window-pixel-width))
+                   t nil t))
+  (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
+  (message "aspect ratio(%s): %s"
+           (propertize (number-to-string rate) 'face
+                       `(:foreground ,exwm-aspect-ratio-zoom-color))
+           (propertize (number-to-string exwm-aspect-ratio-ar) 'face
+                       `(:foreground ,exwm-aspect-ratio-ar-color))))
 
 
 (defun exwm-aspect-ratio-zoom+()
@@ -338,7 +332,7 @@ Ffprobe is a part of the ffmpeg package."
                       (t 0)))
          (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
     (setq exwm-aspect-ratio-zoom-index index)
-    (exwm-aspect-ratio-enlarge zoom-rate)))
+    (exwm-aspect-ratio-zoom zoom-rate)))
 
 (defun exwm-aspect-ratio-zoom-()
 "Zoom backward with zoom list."
@@ -349,7 +343,7 @@ Ffprobe is a part of the ffmpeg package."
 (let* ((index (1- exwm-aspect-ratio-zoom-index))
        (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
   (setq exwm-aspect-ratio-zoom-index index)
-  (exwm-aspect-ratio-enlarge zoom-rate)))
+  (exwm-aspect-ratio-zoom zoom-rate)))
 
 ;; default key
 ;; just example, you can customize it.
