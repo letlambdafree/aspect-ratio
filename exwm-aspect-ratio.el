@@ -1,6 +1,6 @@
 ;;; exwm-aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020 by Taeseong Ryu
+;;; License
 
 ;; Author: Taeseong Ryu <formeu2s@gmail.com>
 ;; URL: https://github.com/letlambdafree/exwm-aspect-ratio
@@ -27,6 +27,10 @@
 ;; It can resize a window with the file's original aspect-ratio.
 ;;
 ;; so, you do not have to see black bars.
+;;
+;; BTW if you have a window tab line or a divider set,
+;;
+;; a little black bar always appears for it.
 
 ;;; Code:
 
@@ -114,11 +118,11 @@ Options are width, height, both")
   "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-enlarge-rate
-  1.03
+  1.02
   "Aspect-ratio enlarge rate.")
 
 (defconst exwm-aspect-ratio-shrink-rate
-  0.97
+  0.98
   "Aspect-ratio shrink rate.")
 
 (defconst exwm-aspect-ratio-video-list
@@ -136,6 +140,14 @@ Options are width, height, both")
     "rmvb" ; RealMedia Variable Bitrate
     )
   "Aspect-ratio video list.")
+
+(defun exwm-aspect-ratio-message(rate)
+  "Message for RATE."
+  (message "aspect ratio(%s): %s"
+           (propertize "W" 'face
+                       `(:foreground ,exwm-aspect-ratio-width-color))
+           (propertize (number-to-string rate)
+                       'face `(:foreground ,exwm-aspect-ratio-ar-color))))
 
 (defun exwm-aspect-ratio-width(&optional ar)
   "Fixed width with optional AR."
@@ -319,9 +331,8 @@ Ffprobe is a part of the ffmpeg package."
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio-zoom(rate)
+(defun exwm-aspect-ratio--zoom(rate)
   "Zoom the selected window with RATE."
-  (interactive)
   (ignore-errors
     (window-resize nil (- (round (* (frame-pixel-width) rate))
                           (window-pixel-width))
@@ -342,7 +353,7 @@ Ffprobe is a part of the ffmpeg package."
                       (t 0)))
          (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
     (setq exwm-aspect-ratio-zoom-index index)
-    (exwm-aspect-ratio-zoom zoom-rate)))
+    (exwm-aspect-ratio--zoom zoom-rate)))
 
 (defun exwm-aspect-ratio-zoom-()
 "Zoom backward with zoom list."
@@ -353,7 +364,7 @@ Ffprobe is a part of the ffmpeg package."
 (let* ((index (1- exwm-aspect-ratio-zoom-index))
        (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
   (setq exwm-aspect-ratio-zoom-index index)
-  (exwm-aspect-ratio-zoom zoom-rate)))
+  (exwm-aspect-ratio--zoom zoom-rate)))
 
 ;; default key
 ;; just example, you can customize it.
