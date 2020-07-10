@@ -146,10 +146,15 @@ Options are width, height, both")
                       (t 0)))
          (aspect-ratio (cond (ar ar)
                              (t (nth index exwm-aspect-ratio-list))))
+         ;; window-pixel-height's return value includes
+         ;; the mode line and header line and the bottom divider
          (height (+ (round (/ (window-pixel-width)
                               aspect-ratio))
                     (window-mode-line-height)
+                    (window-header-line-height)
+                    (window-bottom-divider-width)
                     1)))
+    ()
     (if (not ar)
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
@@ -172,8 +177,14 @@ Options are width, height, both")
                       (t 0)))
          (aspect-ratio (cond (ar ar)
                              (t (nth index exwm-aspect-ratio-list))))
+         ;; window-pixel-width's return value includes
+         ;; the fringes and margins of WINDOW as well as
+         ;; any vertical dividers or scroll bars belonging to WINDOW.
          (width (round (* (- (window-pixel-height)
-                             (window-mode-line-height))
+                             (window-mode-line-height)
+                             (window-header-line-height)
+                             (window-bottom-divider-width)
+                             1)
                           aspect-ratio))))
     (if (not ar)
         (setq exwm-aspect-ratio-index index))
