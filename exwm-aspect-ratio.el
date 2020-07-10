@@ -60,25 +60,25 @@
   "green"
   "W color for message.")
 
-;; (defconst exwm-aspect-ratio-width-color
-;;   "green"
-;;   "W color for message.")
+(defconst exwm-aspect-ratio-width-color
+  "green"
+  "W color for message.")
 
-;; (defconst exwm-aspect-ratio-height-color
-;;   "green"
-;;   "H color for message.")
+(defconst exwm-aspect-ratio-height-color
+  "green"
+  "H color for message.")
 
-;; (defconst exwm-aspect-ratio-enlarge-color
-;;   "blue"
-;;   "E color for message.")
+(defconst exwm-aspect-ratio-enlarge-color
+  "blue"
+  "E color for message.")
 
-;; (defconst exwm-aspect-ratio-shrink-color
-;;   "blue"
-;;   "S color for message.")
+(defconst exwm-aspect-ratio-shrink-color
+  "blue"
+  "S color for message.")
 
-;; (defconst exwm-aspect-ratio-zoom-color
-;;   "HotPink"
-;;   "Z color for message.")
+(defconst exwm-aspect-ratio-zoom-color
+  "HotPink"
+  "Z color for message.")
 
 (defconst exwm-aspect-ratio-fixed
   "width"
@@ -204,15 +204,15 @@ Options are width, height, both")
              (propertize (number-to-string aspect-ratio)
                          'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-    (defun exwm-aspect-ratio-toggle()
-      "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
-      (interactive)
-      (balance-windows)
-      (if exwm-aspect-ratio-toggle
-          (progn (setq exwm-aspect-ratio-toggle nil)
-                 (exwm-aspect-ratio-height))
-        (progn (setq exwm-aspect-ratio-toggle t)
-               (exwm-aspect-ratio-width))))
+(defun exwm-aspect-ratio-toggle()
+  "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
+  (interactive)
+  (balance-windows)
+  (if exwm-aspect-ratio-toggle
+      (progn (setq exwm-aspect-ratio-toggle nil)
+             (exwm-aspect-ratio-height))
+    (progn (setq exwm-aspect-ratio-toggle t)
+           (exwm-aspect-ratio-width))))
 
 (defun exwm-aspect-ratio-get(file)
   "Get original aspect-ratio from FILE using ffprobe.
