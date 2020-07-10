@@ -56,6 +56,10 @@
   "red"
   "Aspect-ratio color for message.")
 
+(defconst exwm-aspect-ratio-option-color
+  "green"
+  "W color for message.")
+
 (defconst exwm-aspect-ratio-width-color
   "green"
   "W color for message.")
@@ -141,12 +145,12 @@ Options are width, height, both")
     )
   "Aspect-ratio video list.")
 
-(defun exwm-aspect-ratio-message(rate)
-  "Message for RATE."
+(defun exwm-aspect-ratio-message(option ar)
+  "Message for OPTION and AR."
   (message "aspect ratio(%s): %s"
-           (propertize "W" 'face
-                       `(:foreground ,exwm-aspect-ratio-width-color))
-           (propertize (number-to-string rate)
+           (propertize option 'face
+                       `(:foreground ,exwm-aspect-ratio-option-color))
+           (propertize (number-to-string ar)
                        'face `(:foreground ,exwm-aspect-ratio-ar-color))))
 
 (defun exwm-aspect-ratio-width(&optional ar)
