@@ -145,14 +145,6 @@ Options are width, height, both")
     )
   "Aspect-ratio video list.")
 
-(defun exwm-aspect-ratio-message(&optional option ar)
-  "Message for OPTION and AR."
-  (message "aspect ratio(%s): %s"
-           (propertize option 'face
-                       `(:foreground ,exwm-aspect-ratio-option-color))
-           (propertize (number-to-string ar)
-                       'face `(:foreground ,exwm-aspect-ratio-ar-color))))
-
 (defun exwm-aspect-ratio-width(&optional ar)
   "Fixed width with optional AR."
   (interactive)
@@ -170,21 +162,16 @@ Options are width, height, both")
                     (window-header-line-height)
                     (window-bottom-divider-width)
                     1)))
-    ()
     (if (not ar)
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- height (window-pixel-height)) nil nil t))
-    (setq exwm-aspect-ratio-ar (if (stringp aspect-ratio)
-                                   (string-to-number aspect-ratio)
-                                 aspect-ratio))
-    (exwm-aspect-ratio-message "W" (number-to-string aspect-ratio))
-    ;; (message "aspect ratio(%s): %s"
-    ;;          (propertize "W" 'face
-    ;;                      `(:foreground ,exwm-aspect-ratio-width-color))
-    ;;          (propertize (number-to-string aspect-ratio)
-    ;;                      'face `(:foreground ,exwm-aspect-ratio-ar-color)))
-    ))
+    (setq exwm-aspect-ratio-ar  aspect-ratio)
+    (message "aspect ratio(%s): %s"
+             (propertize "W" 'face
+                         `(:foreground ,exwm-aspect-ratio-width-color))
+             (propertize (number-to-string aspect-ratio)
+                         'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-height(&optional ar)
   "Fixed height with optional AR."
@@ -211,23 +198,21 @@ Options are width, height, both")
     (setq exwm-aspect-ratio-ar (if (stringp aspect-ratio)
                                    (string-to-number aspect-ratio)
                                  aspect-ratio))
-    (exwm-aspect-ratio-message "H" (number-to-string aspect-ratio))
-    ;; (message "aspect ratio(%s): %s"
-    ;;          (propertize "H" 'face
-    ;;                      `(:foreground ,exwm-aspect-ratio-height-color))
-    ;;           (propertize (number-to-string aspect-ratio)
-    ;;                      'face `(:foreground ,exwm-aspect-ratio-ar-color)))
-    ))
+    (message "aspect ratio(%s): %s"
+             (propertize "H" 'face
+                         `(:foreground ,exwm-aspect-ratio-height-color))
+             (propertize (number-to-string aspect-ratio)
+                         'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio-toggle()
-  "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
-  (interactive)
-  (balance-windows)
-  (if exwm-aspect-ratio-toggle
-      (progn (setq exwm-aspect-ratio-toggle nil)
-             (exwm-aspect-ratio-height))
-    (progn (setq exwm-aspect-ratio-toggle t)
-           (exwm-aspect-ratio-width))))
+    (defun exwm-aspect-ratio-toggle()
+      "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
+      (interactive)
+      (balance-windows)
+      (if exwm-aspect-ratio-toggle
+          (progn (setq exwm-aspect-ratio-toggle nil)
+                 (exwm-aspect-ratio-height))
+        (progn (setq exwm-aspect-ratio-toggle t)
+               (exwm-aspect-ratio-width))))
 
 (defun exwm-aspect-ratio-get(file)
   "Get original aspect-ratio from FILE using ffprobe.
@@ -261,10 +246,9 @@ Ffprobe is a part of the ffmpeg package."
                                                   1)))))
          ;; 1.77777777777777 -> 1.78
          (ar (format "%0.2f" string-ar)))
-      (exwm-aspect-ratio-message ar)
-      ;; (message "aspect ratio: %s"
-      ;;          (propertize ar 'face
-      ;;                      `(:foreground ,exwm-aspect-ratio-ar-color)))
+      (message "aspect ratio: %s"
+               (propertize ar 'face
+                           `(:foreground ,exwm-aspect-ratio-ar-color)))
       (setq exwm-aspect-ratio-ar (string-to-number ar)))))
 
 (defun exwm-aspect-ratio-open(file)
@@ -313,14 +297,11 @@ Ffprobe is a part of the ffmpeg package."
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
-    (exwm-aspect-ratio-message enlarge-string
-                               (number-to-string exwm-aspect-ratio-ar))
-    ;; (message "aspect ratio(%s): %s"
-    ;;          (propertize enlarge-string 'face
-    ;;                      `(:foreground ,exwm-aspect-ratio-enlarge-color))
-    ;;          (propertize (number-to-string exwm-aspect-ratio-ar) 'face
-    ;;                      `(:foreground ,exwm-aspect-ratio-ar-color)))
-    ))
+    (message "aspect ratio(%s): %s"
+             (propertize enlarge-string 'face
+                         `(:foreground ,exwm-aspect-ratio-enlarge-color))
+             (propertize (number-to-string exwm-aspect-ratio-ar) 'face
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-shrink(&optional rate)
   "Shrink the selected window with RATE."
@@ -337,14 +318,11 @@ Ffprobe is a part of the ffmpeg package."
     (ignore-errors
       (window-resize nil (- width (window-pixel-width)) t nil t))
     (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
-    (exwm-aspect-ratio-message shrink-string
-                               (number-to-string exwm-aspect-ratio-ar))
-    ;; (message "aspect ratio(%s): %s"
-    ;;          (propertize shrink-string 'face
-    ;;                      `(:foreground ,exwm-aspect-ratio-shrink-color))
-    ;;          (propertize (number-to-string exwm-aspect-ratio-ar) 'face
-    ;;                      `(:foreground ,exwm-aspect-ratio-ar-color)))
-    ))
+    (message "aspect ratio(%s): %s"
+             (propertize shrink-string 'face
+                         `(:foreground ,exwm-aspect-ratio-shrink-color))
+             (propertize (number-to-string exwm-aspect-ratio-ar) 'face
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio--zoom(rate)
   "Zoom the selected window with RATE."
@@ -353,14 +331,11 @@ Ffprobe is a part of the ffmpeg package."
                           (window-pixel-width))
                    t nil t))
   (exwm-aspect-ratio-width exwm-aspect-ratio-ar)
-  (exwm-aspect-ratio-message (number-to-string rate)
-                             (number-to-string exwm-aspect-ratio-ar))
-  ;; (message "aspect ratio(%s): %s"
-  ;;          (propertize (number-to-string rate) 'face
-  ;;                   `(:foreground ,exwm-aspect-ratio-zoom-color))
-  ;;          (propertize (number-to-string exwm-aspect-ratio-ar) 'face
-  ;;                   `(:foreground ,exwm-aspect-ratio-ar-color)))
-  )
+  (message "aspect ratio(%s): %s"
+           (propertize (number-to-string rate) 'face
+                       `(:foreground ,exwm-aspect-ratio-zoom-color))
+           (propertize (number-to-string exwm-aspect-ratio-ar) 'face
+                       `(:foreground ,exwm-aspect-ratio-ar-color))))
 
 (defun exwm-aspect-ratio-zoom+()
   "Zoom forward with zoom list."
