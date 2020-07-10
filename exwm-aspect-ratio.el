@@ -1,6 +1,6 @@
 ;;; exwm-aspect-ratio.el --- resize a window -*- lexical-binding: t; -*-
 
-;;; License
+;; Copyright (C) 2020 by Taeseong Ryu
 
 ;; Author: Taeseong Ryu <formeu2s@gmail.com>
 ;; URL: https://github.com/letlambdafree/exwm-aspect-ratio
@@ -27,10 +27,6 @@
 ;; It can resize a window with the file's original aspect-ratio.
 ;;
 ;; so, you do not have to see black bars.
-;;
-;; BTW if you have a window tab line or a divider set,
-;;
-;; a little black bar always appears for it.
 
 ;;; Code:
 
@@ -55,10 +51,6 @@
 (defconst exwm-aspect-ratio-ar-color
   "red"
   "Aspect-ratio color for message.")
-
-(defconst exwm-aspect-ratio-option-color
-  "green"
-  "W color for message.")
 
 (defconst exwm-aspect-ratio-width-color
   "green"
@@ -122,11 +114,11 @@ Options are width, height, both")
   "Aspect-ratio zoom list.")
 
 (defconst exwm-aspect-ratio-enlarge-rate
-  1.02
+  1.03
   "Aspect-ratio enlarge rate.")
 
 (defconst exwm-aspect-ratio-shrink-rate
-  0.98
+  0.97
   "Aspect-ratio shrink rate.")
 
 (defconst exwm-aspect-ratio-video-list
@@ -154,19 +146,17 @@ Options are width, height, both")
                       (t 0)))
          (aspect-ratio (cond (ar ar)
                              (t (nth index exwm-aspect-ratio-list))))
-         ;; window-pixel-height's return value includes
-         ;; the mode line and header line and the bottom divider
          (height (+ (round (/ (window-pixel-width)
                               aspect-ratio))
                     (window-mode-line-height)
-                    (window-header-line-height)
-                    (window-bottom-divider-width)
                     1)))
     (if (not ar)
         (setq exwm-aspect-ratio-index index))
     (ignore-errors
       (window-resize nil (- height (window-pixel-height)) nil nil t))
-    (setq exwm-aspect-ratio-ar  aspect-ratio)
+    (setq exwm-aspect-ratio-ar (if (stringp aspect-ratio)
+                                   (string-to-number aspect-ratio)
+                                 aspect-ratio))
     (message "aspect ratio(%s): %s"
              (propertize "W" 'face
                          `(:foreground ,exwm-aspect-ratio-width-color))
@@ -182,14 +172,8 @@ Options are width, height, both")
                       (t 0)))
          (aspect-ratio (cond (ar ar)
                              (t (nth index exwm-aspect-ratio-list))))
-         ;; window-pixel-width's return value includes
-         ;; the fringes and margins of WINDOW as well as
-         ;; any vertical dividers or scroll bars belonging to WINDOW.
          (width (round (* (- (window-pixel-height)
-                             (window-mode-line-height)
-                             (window-header-line-height)
-                             (window-bottom-divider-width)
-                             1)
+                             (window-mode-line-height))
                           aspect-ratio))))
     (if (not ar)
         (setq exwm-aspect-ratio-index index))
@@ -201,8 +185,8 @@ Options are width, height, both")
     (message "aspect ratio(%s): %s"
              (propertize "H" 'face
                          `(:foreground ,exwm-aspect-ratio-height-color))
-             (propertize (number-to-string aspect-ratio)
-                         'face `(:foreground ,exwm-aspect-ratio-ar-color)))))
+             (propertize (number-to-string aspect-ratio) 'face
+                         `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
 (defun exwm-aspect-ratio-toggle()
   "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
@@ -324,8 +308,9 @@ Ffprobe is a part of the ffmpeg package."
              (propertize (number-to-string exwm-aspect-ratio-ar) 'face
                          `(:foreground ,exwm-aspect-ratio-ar-color)))))
 
-(defun exwm-aspect-ratio--zoom(rate)
+(defun exwm-aspect-ratio-zoom(rate)
   "Zoom the selected window with RATE."
+  (interactive)
   (ignore-errors
     (window-resize nil (- (round (* (frame-pixel-width) rate))
                           (window-pixel-width))
@@ -346,18 +331,18 @@ Ffprobe is a part of the ffmpeg package."
                       (t 0)))
          (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
     (setq exwm-aspect-ratio-zoom-index index)
-    (exwm-aspect-ratio--zoom zoom-rate)))
+    (exwm-aspect-ratio-zoom zoom-rate)))
 
 (defun exwm-aspect-ratio-zoom-()
-  "Zoom backward with zoom list."
-  (interactive)
-  (if (<= exwm-aspect-ratio-zoom-index 0)
-      (setq exwm-aspect-ratio-zoom-index
-            (length exwm-aspect-ratio-zoom-list)))
-  (let* ((index (1- exwm-aspect-ratio-zoom-index))
-         (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
-    (setq exwm-aspect-ratio-zoom-index index)
-    (exwm-aspect-ratio--zoom zoom-rate)))
+"Zoom backward with zoom list."
+(interactive)
+(if (<= exwm-aspect-ratio-zoom-index 0)
+    (setq exwm-aspect-ratio-zoom-index
+          (length exwm-aspect-ratio-zoom-list)))
+(let* ((index (1- exwm-aspect-ratio-zoom-index))
+       (zoom-rate (nth index exwm-aspect-ratio-zoom-list)))
+  (setq exwm-aspect-ratio-zoom-index index)
+  (exwm-aspect-ratio-zoom zoom-rate)))
 
 ;; default key
 ;; just example, you can customize it.
