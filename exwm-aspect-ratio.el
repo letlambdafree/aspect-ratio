@@ -192,7 +192,7 @@ Options are width, height, both")
 (defun exwm-aspect-ratio-toggle()
   "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
   (interactive)
-  ;; (balance-windows)
+  (balance-windows)
   (if exwm-aspect-ratio-toggle
       (progn (setq exwm-aspect-ratio-toggle nil)
              (exwm-aspect-ratio-height))
@@ -243,7 +243,7 @@ Ffprobe is a part of the ffmpeg package."
     (when ar
       (if (string= exwm-aspect-ratio-fixed 'width)
           (exwm-aspect-ratio-width ar)
-        (if(string= exwm-aspect-ratio-fixed 'height)
+        (if (string= exwm-aspect-ratio-fixed 'height)
             (exwm-aspect-ratio-height ar)
           (if (> ar exwm-aspect-ratio-both)
               (exwm-aspect-ratio-height ar)
@@ -257,13 +257,13 @@ Ffprobe is a part of the ffmpeg package."
   (let* ((file (dired-get-filename nil t))
          (ar (exwm-aspect-ratio-get file)))
     (when ar
-      (if (string= exwm-aspect-ratio-fixed 'width)
-          (exwm-aspect-ratio-width ar)
-        (if(string= exwm-aspect-ratio-fixed 'height)
-            (exwm-aspect-ratio-height ar)
-          (if (> ar exwm-aspect-ratio-both)
-              (exwm-aspect-ratio-height ar)
-            (exwm-aspect-ratio-width ar))))
+      (cond ((string= exwm-aspect-ratio-fixed 'width)
+             (exwm-aspect-ratio-width ar))
+            ((string= exwm-aspect-ratio-fixed 'height)
+             (exwm-aspect-ratio-height ar))
+            ((> ar exwm-aspect-ratio-both)
+             (exwm-aspect-ratio-height ar))
+            (t (exwm-aspect-ratio-width ar)))
       (start-process exwm-aspect-ratio-player-processname
                      nil exwm-aspect-ratio-player file))))
 
