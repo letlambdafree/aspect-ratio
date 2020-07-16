@@ -134,6 +134,7 @@ Options are width, height, both")
     "asf" ; Advanced Systems Format
     "mov" ; QuickTime File Format
     "rmvb" ; RealMedia Variable Bitrate
+    "ts"
     )
   "Aspect-ratio video list.")
 
@@ -191,12 +192,12 @@ Options are width, height, both")
 (defun exwm-aspect-ratio-toggle()
   "Toggle between exwm-aspect-ratio-width and exwm-aspect-ratio-height."
   (interactive)
-  (balance-windows)
+  ;; (balance-windows)
   (if exwm-aspect-ratio-toggle
       (progn (setq exwm-aspect-ratio-toggle nil)
              (exwm-aspect-ratio-height))
-    (progn (setq exwm-aspect-ratio-toggle t)
-           (exwm-aspect-ratio-width))))
+    (setq exwm-aspect-ratio-toggle t)
+    (exwm-aspect-ratio-width)))
 
 (defun exwm-aspect-ratio-get(file)
   "Get original aspect-ratio from FILE using ffprobe.
