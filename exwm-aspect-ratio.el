@@ -215,16 +215,25 @@ Ffprobe is a part of the ffmpeg package."
                        -of csv=s=x:p=0 \
                        %s"
             outfile)))
-         (split-output (split-string (substring output 0 -1) "[x:]"))
+         ;; (split-output (split-string (substring output 0 -1) "[x:]"))
+         (split-output (split-string
+                        (replace-regexp-in-string "\n" "" output) "[x:]"))
          ;; ffprobe results
          ;; N/A
          ;; 1920x1080
          ;; 1920x1080xN/A
          ;; 720x480x853:480
+         ;;
+         ;; ts -> 3 lines
+         ;; 1920x1080x16:9
+         ;;
+         ;; 1920x1080x16:9
          (cond-output
           (cond ((eq (length split-output) 2) split-output)
                 ((eq (length split-output) 3) (delete "N/A" split-output))
-                ((eq (length split-output) 4) (nthcdr 2 split-output))))
+                ((eq (length split-output) 4) (nthcdr 2 split-output))
+                ((> (length split-output) 4)
+                 (nthcdr (- (length split-output) 2) split-output))))
          (string-ar (/ (string-to-number (nth 0 cond-output))
                        (float (string-to-number (if (nth 1 cond-output)
                                                     (nth 1 cond-output)
@@ -265,7 +274,7 @@ Ffprobe is a part of the ffmpeg package."
              (exwm-aspect-ratio-height ar))
             (t (exwm-aspect-ratio-width ar)))
       (start-process exwm-aspect-ratio-player-processname
-                     nil exwm-aspect-ratio-player file))))
+                     nil exwm-aspect-ratio-player file "--dired"))))
 
 (defun exwm-aspect-ratio-enlarge(&optional rate)
   "Enlarge the selected window with RATE."
