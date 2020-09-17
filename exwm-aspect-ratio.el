@@ -205,7 +205,10 @@ Ffprobe is a part of the ffmpeg package."
   (interactive)
   (when (member (file-name-extension file) exwm-aspect-ratio-video-list)
     (let*
-        ((outfile (replace-regexp-in-string "[][() ]" "\\\\\\&" file))
+        (
+         ;; file's some special characters need to be escaped with \
+         (outfile (replace-regexp-in-string
+                   "[[(){}<>'\"|\\&; ]" "\\\\\\&" file))
          (output
           (shell-command-to-string
            (format
